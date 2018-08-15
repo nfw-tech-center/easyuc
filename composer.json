@@ -1,0 +1,33 @@
+{
+    "name": "abelhalo/easyuc",
+    "description": "A package for Laravel",
+    "keywords": [
+        "laravel"
+    ],
+    "homepage": "https://github.com/zxz054321/easyuc",
+    "authors": [
+        {
+            "name": "Abel",
+            "email": "zxz054321@foxmail.com",
+            "homepage": "https://github.com/zxz054321"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AbelHalo\\EasyUC\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {}
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
+}
