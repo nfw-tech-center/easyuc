@@ -24,7 +24,11 @@
         }
     },
     "extra": {
-        "laravel": {}
+        "laravel": {
+            "providers": [
+                "AbelHalo\\EasyUC\\ServiceProvider"
+            ]
+        }
     },
     "config": {
         "sort-packages": true
