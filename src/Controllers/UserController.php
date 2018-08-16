@@ -1,10 +1,11 @@
 <?php
 
-namespace AbelHalo\EasyUC;
+namespace AbelHalo\EasyUC\Controllers;
 
+use AbelHalo\EasyUC\User;
 use Illuminate\Http\Request;
 
-class Controller extends \Illuminate\Routing\Controller
+class UserController extends \Illuminate\Routing\Controller
 {
     protected $user;
 
