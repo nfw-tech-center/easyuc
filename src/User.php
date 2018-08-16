@@ -9,4 +9,6 @@ interface User
     public function create($uid);
 
     public function destory($uid);
+
+    public function sync($user);
 }
