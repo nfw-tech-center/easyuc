@@ -1,6 +1,6 @@
 <?php
 
-namespace AbelHalo\EasyUC;
+namespace Abel\EasyUC;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {

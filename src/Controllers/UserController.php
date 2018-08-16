@@ -1,8 +1,8 @@
 <?php
 
-namespace AbelHalo\EasyUC\Controllers;
+namespace Abel\EasyUC\Controllers;
 
-use AbelHalo\EasyUC\User;
+use Abel\EasyUC\User;
 use Illuminate\Http\Request;
 
 class UserController extends \Illuminate\Routing\Controller
