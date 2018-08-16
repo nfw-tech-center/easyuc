@@ -26,6 +26,6 @@ class UserController extends \Illuminate\Routing\Controller
 
     public function destoryUser(Request $request)
     {
-        $this->user->destory($request->uid);
+        $this->user->destroy($request->uid);
     }
 }
