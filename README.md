@@ -53,8 +53,75 @@ php artisan route:list | grep uc
 ```php
 public function register()
 {
-    $this->app->bind(\Abel\EasyUC\User::class, FooBar::class);
+    $this->app->bind(\Abel\EasyUC\User::class, \App\Repositories\UserCenterUser::class);
 }
 ```
 
-`FooBar` 类是编写业务逻辑的地方，可自行找地方存取，它需要实现 `Abel\EasyUC\User` 契约，以完成跟 CMS 用户中心的对接。
+`UserCenterUser` 类是编写业务逻辑的地方，可自行找地方存取，它需要实现 `Abel\EasyUC\User` 契约，以完成跟 CMS 用户中心的对接。
+
+示例代码：
+
+```php
+namespace App\Repositories;
+
+use App\User;
+
+class UserCenterUser implements \Abel\EasyUC\User
+{
+    /**
+     * 获取 UID 列表
+     *
+     * @return Collection|array
+     */
+    public function all()
+    {
+        return User::pluck('uid');
+    }
+
+    /**
+     * 为指定的 UID 创建业务系统用户
+     *
+     * @param $uid
+     * @return void
+     */
+    public function create($uid)
+    {
+        User::create([
+            'uid'    => $uid,
+        ]);
+    }
+
+    /**
+     * 根据 UID 删除业务系统用户
+     *
+     * @param $uid
+     * @return void
+     */
+    public function destroy($uid)
+    {
+        User::whereUid($uid)->delete();
+    }
+
+    /**
+     * 在 OAuth 过程中从用户中心同步用户数据到业务系统
+     *
+     * @param $user
+     * @return Model 业务系统的 User 模型
+     */
+    public function sync($info)
+    {
+        $user = User::whereUid($info->id)->first();
+        $data = [
+            'uid'    => $info->id,
+            'name'    => $info->name,
+            'email'   => $info->email,
+        ];
+
+        $user
+            ? $user->update($data)
+            : $user = User::create($data);
+
+        return $user;
+    }
+}
+```
