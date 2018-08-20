@@ -57,7 +57,7 @@ public function register()
 }
 ```
 
-`UserCenterUser` 类是编写业务逻辑的地方，可自行找地方存取，它需要实现 `Abel\EasyUC\User` 契约，以完成跟 CMS 用户中心的对接。
+`UserCenterUser` 类是编写业务逻辑的地方，可自行找地方存放，它需要实现 `Abel\EasyUC\User` 契约，以完成跟 CMS 用户中心的对接。
 
 示例代码：
 

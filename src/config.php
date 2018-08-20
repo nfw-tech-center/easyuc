@@ -4,7 +4,7 @@ return [
 
     'route' => [
         // 暴露给用户中心的接口url前缀
-        'prefix' => 'api',
+        'prefix' => env('UC_PREFIX'),
     ],
 
     'oauth' => [
