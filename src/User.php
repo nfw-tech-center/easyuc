@@ -33,7 +33,7 @@ interface User
     /**
      * 在 OAuth 过程中从用户中心同步用户数据到业务系统
      *
-     * @param $user
+     * @param OAuthData $user
      * @return Model 业务系统的 User 模型
      */
     public function sync($user);
