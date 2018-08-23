@@ -2,6 +2,7 @@
 
 namespace Abel\EasyUC\Controllers;
 
+use Abel\EasyUC\Middleware\AuthenticateUserCenterRequests;
 use Abel\EasyUC\User;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,8 @@ class UserController extends \Illuminate\Routing\Controller
 
     public function __construct(User $user)
     {
+        $this->middleware(AuthenticateUserCenterRequests::class);
+
         $this->user = $user;
     }
 

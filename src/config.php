@@ -2,6 +2,9 @@
 
 return [
 
+    'app'    => env('UC_APP'),
+    'ticket' => env('UC_TICKET'),
+
     'route' => [
         // 暴露给用户中心的接口url前缀
         'prefix' => env('UC_PREFIX'),
