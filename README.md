@@ -38,6 +38,16 @@ composer require abelhalo/easyuc
 php artisan vendor:publish --provider="Abel\EasyUC\ServiceProvider"
 ```
 
+如果懒得折腾配置文件，可在 `.env` 文件里加上如下配置项：
+
+```
+UC_APP=
+UC_TICKET=
+UC_PREFIX=
+UC_OAUTH_URL=
+UC_OAUTH_REDIRECT=/
+```
+
 ### 路由
 
 查看 Easy UC 实际注册的路由
