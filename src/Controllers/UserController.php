@@ -2,8 +2,8 @@
 
 namespace Abel\EasyUC\Controllers;
 
+use Abel\EasyUC\Contracts\User;
 use Abel\EasyUC\Middleware\AuthenticateUserCenterRequests;
-use Abel\EasyUC\User;
 use Illuminate\Http\Request;
 
 class UserController extends \Illuminate\Routing\Controller
@@ -24,7 +24,7 @@ class UserController extends \Illuminate\Routing\Controller
 
     public function addUser(Request $request)
     {
-        $this->user->create($request->uid);
+        $this->user->createByUid($request->uid);
     }
 
     public function destoryUser(Request $request)
