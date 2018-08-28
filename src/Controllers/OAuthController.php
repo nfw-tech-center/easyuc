@@ -2,7 +2,7 @@
 
 namespace Abel\EasyUC\Controllers;
 
-use Abel\EasyUC\Contracts\User;
+use Abel\EasyUC\Contracts\UserCenterUser;
 use Abel\EasyUC\OAuthData;
 use AbelHalo\ApiProxy\ApiProxy;
 use Illuminate\Routing\Controller;
@@ -26,8 +26,8 @@ class OAuthController extends Controller
 
     protected function syncUser()
     {
-        /** @var User $user */
-        $user = app(User::class);
+        /** @var UserCenterUser $user */
+        $user = app(UserCenterUser::class);
         $auth = new OAuthData($this->getOAuthInfo());
 
         return $user->exists($auth->id)

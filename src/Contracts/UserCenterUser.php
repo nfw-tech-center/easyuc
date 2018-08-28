@@ -6,7 +6,7 @@ use Abel\EasyUC\OAuthData;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
-interface User
+interface UserCenterUser
 {
     /**
      * 获取 UID 列表

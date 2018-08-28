@@ -63,8 +63,8 @@ php artisan route:list | grep uc
 ```php
 public function register()
 {
-    $this->app->bind(\Abel\EasyUC\Contracts\User::class, \App\Repositories\UserCenterUser::class);
+    $this->app->bind(\Abel\EasyUC\Contracts\UserCenterUser::class, \App\Repositories\UserCenterUser::class);
 }
 ```
 
-`UserCenterUser` 类是编写业务逻辑的地方，可自行找地方存放，它需要实现 `Abel\EasyUC\Contracts\User` 契约，以完成跟 CMS 用户中心的对接。
+`UserCenterUser` 类是编写业务逻辑的地方，可自行找地方存放，它需要实现 `Abel\EasyUC\Contracts\UserCenterUser` 契约，以完成跟 CMS 用户中心的对接。
