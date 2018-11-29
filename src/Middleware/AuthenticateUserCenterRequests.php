@@ -3,6 +3,7 @@
 namespace Abel\EasyUC\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 
 class AuthenticateUserCenterRequests
 {
@@ -16,19 +17,11 @@ class AuthenticateUserCenterRequests
     public function handle($request, Closure $next)
     {
         if ($request->time < now()->addMinutes(-5)->timestamp) {
-            return [
-                'errcode'    => 30004,
-                'errmessage' => '时间不合法',
-                'data'       => null,
-            ];
+            return $this->errorResponse(30004, '时间不合法');
         }
 
         if ($request->token != $this->calculateToken($request->time)) {
-            return [
-                'errcode'    => 30005,
-                'errmessage' => 'token不合法',
-                'data'       => null,
-            ];
+            return $this->errorResponse(30005, 'token不合法');
         }
 
         return $next($request);
@@ -39,5 +32,14 @@ class AuthenticateUserCenterRequests
         return md5(
             config('easyuc.app') . $time . config('easyuc.ticket')
         );
+    }
+
+    protected function errorResponse($code, $message)
+    {
+        return new JsonResponse([
+            'errcode'    => $code,
+            'errmessage' => $message,
+            'data'       => null,
+        ], 403);
     }
 }
