@@ -17,6 +17,9 @@ class OAuthController extends Controller
         $this->proxy = (new ApiProxy)->setReturnAs(ApiProxy::RETURN_AS_OBJECT);
     }
 
+    /**
+     * 处理OAuth回调
+     */
     public function obtainToken()
     {
         Auth::login($this->syncUser());
@@ -30,9 +33,11 @@ class OAuthController extends Controller
         $user = app(UserCenterUser::class);
         $auth = new OAuthData($this->getOAuthInfo());
 
-        return $user->exists($auth->id)
-            ? $user->update($auth)
-            : $user->create($auth);
+        if (!$user->exists($auth->id)) {
+            exit('管理中心未授权此用户');
+        }
+
+        return $user->update($auth);
     }
 
     protected function getOAuthInfo()

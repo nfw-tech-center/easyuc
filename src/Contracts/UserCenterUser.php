@@ -16,14 +16,6 @@ interface UserCenterUser
     public function all();
 
     /**
-     * 使用 OAuth 数据创建业务系统用户
-     *
-     * @param OAuthData $authdata
-     * @return Authenticatable
-     */
-    public function create(OAuthData $authdata);
-
-    /**
      * 为指定的 UID 创建业务系统用户
      *
      * @param $uid
