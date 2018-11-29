@@ -5,6 +5,9 @@ return [
     'app'    => env('UC_APP'),
     'ticket' => env('UC_TICKET'),
 
+    // 调试模式下不会校验Private API签名
+    'debug'  => env('UC_DEBUG', false),
+
     'route' => [
         // 暴露给用户中心的接口url前缀
         'prefix' => env('UC_PREFIX'),

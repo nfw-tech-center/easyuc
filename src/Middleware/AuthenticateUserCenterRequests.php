@@ -16,6 +16,10 @@ class AuthenticateUserCenterRequests
      */
     public function handle($request, Closure $next)
     {
+        if (config('easyuc.debug')) {
+            return $next($request);
+        }
+
         if ($request->time < now()->addMinutes(-5)->timestamp) {
             return $this->errorResponse(30004, '时间不合法');
         }
