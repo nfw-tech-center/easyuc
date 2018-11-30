@@ -4,6 +4,7 @@ namespace Abel\EasyUC\Controllers;
 
 use Abel\EasyUC\Contracts\UserCenterUser;
 use Abel\EasyUC\Middleware\AuthenticateUserCenterRequests;
+use Abel\EasyUC\PlatformResponse;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,8 @@ class UserController extends \Illuminate\Routing\Controller
         $this->validate($request, ['uid' => 'required']);
 
         $this->user->createByUid($request->uid);
+
+        return new PlatformResponse(0);
     }
 
     public function destoryUser(Request $request)
@@ -37,5 +40,7 @@ class UserController extends \Illuminate\Routing\Controller
         $this->validate($request, ['uid' => 'required']);
 
         $this->user->destroy($request->uid);
+
+        return new PlatformResponse(0);
     }
 }

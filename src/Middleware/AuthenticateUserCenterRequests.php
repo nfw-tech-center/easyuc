@@ -2,8 +2,8 @@
 
 namespace Abel\EasyUC\Middleware;
 
+use Abel\EasyUC\PlatformResponse;
 use Closure;
-use Illuminate\Http\JsonResponse;
 
 class AuthenticateUserCenterRequests
 {
@@ -40,10 +40,6 @@ class AuthenticateUserCenterRequests
 
     protected function errorResponse($code, $message)
     {
-        return new JsonResponse([
-            'errcode'    => $code,
-            'errmessage' => $message,
-            'data'       => null,
-        ], 403);
+        return new PlatformResponse($code, $message, 403);
     }
 }
