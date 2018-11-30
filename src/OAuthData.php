@@ -7,6 +7,7 @@ namespace Abel\EasyUC;
  * @property-read  int    org_id
  * @property-read  string name
  * @property-read  string email
+ * @property-read  bool   super
  */
 class OAuthData
 {
@@ -14,7 +15,8 @@ class OAuthData
 
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data  = $data;
+        $this->super = (0 == $this->data->group);
     }
 
     public function __get($name)

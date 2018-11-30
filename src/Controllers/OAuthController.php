@@ -34,7 +34,12 @@ class OAuthController extends Controller
         $auth = new OAuthData($this->getOAuthInfo());
 
         if (!$user->exists($auth->id)) {
-            exit('管理中心未授权此用户');
+            if (!$auth->super) {
+                exit('管理中心未授权此用户');
+            }
+
+            // 超管不受限
+            $user->createByUid($auth->id);
         }
 
         return $user->update($auth);
