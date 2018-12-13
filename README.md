@@ -1,6 +1,6 @@
 # Easy UC
 
-Easy UC 是为方便平台子系统与平台用户中心对接而打造的 Laravel 扩展包，可极大地降低重复工作量：
+Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel 扩展包，可极大地降低重复工作量：
 
 1. 无需理会跟平台用户中心交互的技术细节（HTTP、授权逻辑等）
 2. 无需反复搭建繁琐的路由、控制器等结构
@@ -19,6 +19,21 @@ Easy UC 是为方便平台子系统与平台用户中心对接而打造的 Larav
 
 - PHP >= 7.0
 - Laravel >= 5.5
+
+
+
+## 认证流程
+
+### 登入
+
+1. APP 判断当前未登入，跳去平台用户中心登入页面
+2. 平台用户中心登入成功后，会回调跳转到 APP 提供的回调地址（默认 `http(s)://platform-app.domain/uc/obtain-token`）
+3. Easy UC 注册的 `uc/obtain-token` 路由接手登入回调过程，自动调用 Laravel 的 `Auth:login` 方法实现 APP 内登入
+
+### 登出
+
+1. APP 内部做登出处理，比如 `Auth:logout` ，完成 APP 级登出
+2. 跳转去平台用户中心的登出地址，完成平台级登出
 
 
 
@@ -77,7 +92,7 @@ php artisan route:list | grep uc
 
 ### 业务逻辑
 
-在`App\Repositories\UserCenterUser` 类编写子系统内部的业务逻辑。
+在`App\Repositories\UserCenterUser` 类编写 APP 内部的业务逻辑。
 
 注：Easy UC 已内置了管理中心应用授权判断逻辑，无需重复实现。
 
