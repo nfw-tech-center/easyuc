@@ -45,20 +45,14 @@ php artisan vendor:publish --provider="Abel\EasyUC\ServiceProvider"
 ```
 UC_APP=
 UC_TICKET=
+UC_DEBUG=false
 UC_PREFIX=
+UC_OAUTH_SWITCH_TO_DETAIL_INFO=false
 UC_OAUTH_URL=
 UC_OAUTH_REDIRECT=/
 ```
 
 如不了解 ENV 配置项的作用，可先发布配置文件，然后查看配置文件的注释。
-
-### 路由
-
-要确认 Easy UC 的路由是否成功注册，可查看项目中已注册的路由：
-
-```shell
-php artisan route:list | grep uc
-```
 
 ### 服务提供者
 
@@ -72,6 +66,14 @@ public function register()
 ```
 
 `App\Repositories\UserCenterUser` 类必须实现 `Abel\EasyUC\Contracts\UserCenterUser` 契约，可放在任意目录。
+
+### 路由
+
+要确认 Easy UC 的路由是否成功注册，可查看项目中已注册的路由：
+
+```shell
+php artisan route:list | grep uc
+```
 
 ### 业务逻辑
 

@@ -5,7 +5,7 @@ return [
     'app'    => env('UC_APP'),
     'ticket' => env('UC_TICKET'),
 
-    // 调试模式下不会校验Private API签名
+    // 调试模式下不会校验 Private API 签名
     'debug'  => env('UC_DEBUG', false),
 
     'route' => [
@@ -14,11 +14,14 @@ return [
     ],
 
     'oauth' => [
+        // 使用用户中心（抽离后）的 detailinfo 接口
+        'switch_to_detail_info' => env('UC_OAUTH_SWITCH_TO_DETAIL_INFO', false),
+
         // OAuth登录时的回调地址
-        'auth_url'     => env('UC_OAUTH_URL'),
+        'auth_url'              => env('UC_OAUTH_URL'),
 
         // 登录成功后的跳转地址
-        'redirect_url' => env('UC_OAUTH_REDIRECT', '/'),
+        'redirect_url'          => env('UC_OAUTH_REDIRECT', '/'),
     ],
 
 ];

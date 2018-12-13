@@ -14,7 +14,7 @@ class OAuthController extends Controller
 
     public function __construct()
     {
-        $this->proxy = (new ApiProxy)->setReturnAs(ApiProxy::RETURN_AS_OBJECT);
+        $this->proxy = (new ApiProxy)->setReturnAs('object');
     }
 
     /**
@@ -30,8 +30,9 @@ class OAuthController extends Controller
     protected function syncUser()
     {
         /** @var UserCenterUser $user */
-        $user = app(UserCenterUser::class);
-        $auth = new OAuthData($this->getOAuthInfo());
+        $user               = app(UserCenterUser::class);
+        $switchToDetailInfo = config('easyuc.oauth.switch_to_detail_info', false);
+        $auth               = new OAuthData($this->getOAuthInfo(), $switchToDetailInfo);
 
         if (!$user->exists($auth->id)) {
             if (!$auth->super) {
