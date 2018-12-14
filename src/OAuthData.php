@@ -9,6 +9,7 @@ namespace Abel\EasyUC;
  * @property-read string email
  * @property-read bool   super
  * @property-read int    group
+ * @property-read array  site_list
  */
 class OAuthData
 {
@@ -25,6 +26,10 @@ class OAuthData
 
     public function __get($name)
     {
+        if ('site_list' == $name) {
+            return $this->data->site_list;
+        }
+
         return $this->switchToDetailInfo
             ? $this->data->user->$name
             : $this->data->$name;
