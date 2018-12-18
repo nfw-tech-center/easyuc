@@ -3,6 +3,8 @@
 namespace Abel\EasyUC\Controllers;
 
 use Abel\EasyUC\Contracts\UserCenterUser;
+use Abel\EasyUC\Exceptions\ApiFailedException;
+use Abel\EasyUC\Exceptions\UnauthorizedException;
 use Abel\EasyUC\OAuthData;
 use AbelHalo\ApiProxy\ApiProxy;
 use Illuminate\Routing\Controller;
@@ -18,7 +20,11 @@ class OAuthController extends Controller
     }
 
     /**
-     * 处理OAuth回调
+     * 处理 OAuth 回调
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws ApiFailedException
+     * @throws UnauthorizedException
      */
     public function obtainToken()
     {
@@ -27,6 +33,11 @@ class OAuthController extends Controller
         return redirect(config('easyuc.oauth.redirect_url'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Auth\Authenticatable
+     * @throws ApiFailedException
+     * @throws UnauthorizedException
+     */
     protected function syncUser()
     {
         /** @var UserCenterUser $user */
@@ -36,7 +47,7 @@ class OAuthController extends Controller
 
         if (!$user->exists($auth->id)) {
             if (!$auth->super) {
-                exit('管理中心未授权此用户');
+                throw new UnauthorizedException('管理中心未授权此用户');
             }
 
             // 超管不受限
@@ -46,17 +57,23 @@ class OAuthController extends Controller
         return $user->update($auth);
     }
 
+    /**
+     * 调取用户中心的“用户数据”接口
+     *
+     * @return object
+     * @throws ApiFailedException
+     */
     protected function getOAuthInfo()
     {
         $url = config('easyuc.oauth.auth_url');
 
-        /** @var \stdClass $oauthResponse */
+        /** @var object $oauthResponse */
         $oauthResponse = $this->proxy->post($url, [
             'access_token' => request('access_token'),
         ]);
 
         if (empty($oauthResponse->data)) {
-            exit("调用 $url 接口失败");
+            throw new ApiFailedException("调用 $url 接口失败");
         }
 
         return $oauthResponse->data;
