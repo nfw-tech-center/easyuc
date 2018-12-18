@@ -1,19 +1,19 @@
 {
-    "name": "abelhalo/easyuc",
-    "description": "A package for Laravel",
+    "name": "southcn/easyuc",
+    "description": "A SouthCN package",
     "keywords": [
         "laravel"
     ],
-    "homepage": "https://github.com/zxz054321/easyuc",
+    "homepage": "https://gitlab.com/southcn/easyuc",
     "authors": [
         {
             "name": "Abel",
             "email": "zxz054321@foxmail.com",
-            "homepage": "https://github.com/zxz054321"
+            "homepage": "https://gitlab.com/southcn"
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.1.0",
         "abelhalo/api-proxy": "^1.4"
     },
     "require-dev": {
