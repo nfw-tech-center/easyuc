@@ -1,8 +1,8 @@
 <?php
 
-namespace Abel\EasyUC\Contracts;
+namespace SouthCN\EasyUC\Contracts;
 
-use Abel\EasyUC\OAuthData;
+use SouthCN\EasyUC\OAuthData;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 

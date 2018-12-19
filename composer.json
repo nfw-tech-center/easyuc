@@ -21,13 +21,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Abel\\EasyUC\\": "src/"
+            "SouthCN\\EasyUC\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Abel\\EasyUC\\ServiceProvider"
+                "SouthCN\\EasyUC\\ServiceProvider"
             ]
         }
     },

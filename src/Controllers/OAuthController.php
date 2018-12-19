@@ -1,11 +1,11 @@
 <?php
 
-namespace Abel\EasyUC\Controllers;
+namespace SouthCN\EasyUC\Controllers;
 
-use Abel\EasyUC\Contracts\UserCenterUser;
-use Abel\EasyUC\Exceptions\ApiFailedException;
-use Abel\EasyUC\Exceptions\UnauthorizedException;
-use Abel\EasyUC\OAuthData;
+use SouthCN\EasyUC\Contracts\UserCenterUser;
+use SouthCN\EasyUC\Exceptions\ApiFailedException;
+use SouthCN\EasyUC\Exceptions\UnauthorizedException;
+use SouthCN\EasyUC\OAuthData;
 use AbelHalo\ApiProxy\ApiProxy;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;

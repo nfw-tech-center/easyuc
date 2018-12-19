@@ -1,6 +1,6 @@
 <?php
 
-namespace Abel\EasyUC;
+namespace SouthCN\EasyUC;
 
 class PlatformResponse extends \Illuminate\Http\JsonResponse
 {

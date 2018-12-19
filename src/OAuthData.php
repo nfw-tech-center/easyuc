@@ -1,6 +1,6 @@
 <?php
 
-namespace Abel\EasyUC;
+namespace SouthCN\EasyUC;
 
 /**
  * @property-read int    id

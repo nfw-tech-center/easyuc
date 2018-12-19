@@ -1,6 +1,6 @@
 <?php
 
-namespace Abel\EasyUC\Exceptions;
+namespace SouthCN\EasyUC\Exceptions;
 
 class UnauthorizedException extends Exception
 {

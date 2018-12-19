@@ -1,8 +1,8 @@
 <?php
 
-namespace Abel\EasyUC\Middleware;
+namespace SouthCN\EasyUC\Middleware;
 
-use Abel\EasyUC\PlatformResponse;
+use SouthCN\EasyUC\PlatformResponse;
 use Closure;
 
 class AuthenticateUserCenterRequests
