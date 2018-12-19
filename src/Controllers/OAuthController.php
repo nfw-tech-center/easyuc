@@ -46,11 +46,13 @@ class OAuthController extends Controller
         $user = app(UserCenterUser::class);
 
         if ($this->repository->super()) {
-            return $user->sync($this->repository->user());
+            return $user->sync($this->repository);
         }
 
-        if ($this->repository->authorized(1)) {
-            return $user->sync($this->repository->user());
+        $siteAppId = config('easyuc.site_app_id');
+
+        if ($this->repository->authorized($siteAppId)) {
+            return $user->sync($this->repository);
         }
 
         throw new UnauthorizedException('管理中心未授权此用户');

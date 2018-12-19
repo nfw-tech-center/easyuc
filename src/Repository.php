@@ -53,8 +53,8 @@ class Repository
      *
      * @return SiteAppMap
      */
-    protected function siteAppMap(): SiteAppMap
+    public function siteAppMap(): SiteAppMap
     {
-        return new SiteAppMap($this->data->user);
+        return new SiteAppMap($this->data->site_list);
     }
 }

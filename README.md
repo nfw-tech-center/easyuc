@@ -11,14 +11,13 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 ## 主要功能
 
 - OAuth 授权
-- 用户管理接口（供平台用户中心调用）
 
 
 
 ## 环境要求
 
-- PHP >= 7.0
-- Laravel >= 5.5
+- PHP >= 7.1
+- Laravel >= 5.6
 
 
 
@@ -100,6 +99,23 @@ php artisan route:list | grep uc
 
 ## 版本升级
 
-从 v1.0.0 升级：
+### 从 v1.x 升级
+
+更新 `composer.json` 信息：
+
+```
+composer remove abelhalo/easyuc
+composer require southcn/easyuc
+```
+
+
+
+切换命名空间：
+
+将所有 `Abel\EasyUC` 替换为`SouthCN\EasyUC`
+
+
+
+### 从 v1.0.0 升级
 
 - `Abel\EasyUC\Contracts\UserCenterUser` 契约中的 `create` 方法不再使用，可移除

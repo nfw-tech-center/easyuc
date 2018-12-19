@@ -2,11 +2,12 @@
 
 return [
 
-    'app'    => env('UC_APP'),
-    'ticket' => env('UC_TICKET'),
+    'app'         => env('UC_APP'),
+    'ticket'      => env('UC_TICKET'),
+    'site_app_id' => env('UC_SITE_APP_ID'),
 
     // 调试模式下不会校验 Private API 签名
-    'debug'  => env('UC_DEBUG', false),
+    'debug'       => env('UC_DEBUG', false),
 
     'route' => [
         // 暴露给用户中心的接口url前缀
