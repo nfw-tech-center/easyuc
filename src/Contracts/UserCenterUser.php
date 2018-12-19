@@ -9,13 +9,6 @@ use Illuminate\Support\Collection;
 interface UserCenterUser
 {
     /**
-     * 获取 UID 列表
-     *
-     * @return Collection|array
-     */
-    public function all();
-
-    /**
      * 为指定的 UID 创建业务系统用户
      *
      * @param $uid
@@ -30,14 +23,6 @@ interface UserCenterUser
      * @return Authenticatable
      */
     public function update(OAuthData $authdata);
-
-    /**
-     * 根据 UID 删除业务系统用户
-     *
-     * @param $uid
-     * @return void
-     */
-    public function destroy($uid);
 
     /**
      * 根据 UID 确定业务系统是否存在此用户
