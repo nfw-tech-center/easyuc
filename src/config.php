@@ -4,6 +4,8 @@ return [
 
     'app'         => env('UC_APP'),
     'ticket'      => env('UC_TICKET'),
+
+    // 对应用户中心 site_app 表的 id 字段值
     'site_app_id' => env('UC_SITE_APP_ID'),
 
     // 调试模式下不会校验 Private API 签名

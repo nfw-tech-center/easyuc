@@ -75,11 +75,11 @@ UC_OAUTH_REDIRECT=/
 ```php
 public function register()
 {
-    $this->app->bind(\Abel\EasyUC\Contracts\UserCenterUser::class, \App\Repositories\UserCenterUser::class);
+    $this->app->bind(\SouthCN\EasyUC\Contracts\UserCenterUser::class, \App\Repositories\UserCenterUser::class);
 }
 ```
 
-`App\Repositories\UserCenterUser` 类必须实现 `Abel\EasyUC\Contracts\UserCenterUser` 契约，可放在任意目录。
+`App\Repositories\UserCenterUser` 类必须实现 `SouthCN\EasyUC\Contracts\UserCenterUser` 契约，可放在任意目录。
 
 ### 路由
 
@@ -113,6 +113,28 @@ composer require southcn/easyuc
 切换命名空间：
 
 将所有 `Abel\EasyUC` 替换为`SouthCN\EasyUC`
+
+
+
+移除无用 env 配置项，如有发布配置文件，对应到 easyuc.php 的配置项也一并移除：
+
+```
+UC_OAUTH_SWITCH_TO_DETAIL_INFO
+```
+
+
+
+增加 env 配置项，如有发布配置文件，请重新发布：
+
+```
+UC_SITE_APP_ID=用户中心site_app表的id字段值
+```
+
+
+
+简化的 `SouthCN\EasyUC\Contracts\UserCenterUser` 契约：
+
+原来的 `update` 方法基本可变更为新的 `sync` 方法，其它方法全部可以移除
 
 
 
