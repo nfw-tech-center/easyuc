@@ -41,9 +41,8 @@ class OAuthController extends Controller
     protected function syncUser()
     {
         /** @var UserCenterUser $user */
-        $user               = app(UserCenterUser::class);
-        $switchToDetailInfo = config('easyuc.oauth.switch_to_detail_info', false);
-        $auth               = new OAuthData($this->api->getUserDetailInfo(), $switchToDetailInfo);
+        $user = app(UserCenterUser::class);
+        $auth = new OAuthData($this->api->getUserDetailInfo());
 
         if (!$user->exists($auth->id)) {
             if (!$auth->super) {

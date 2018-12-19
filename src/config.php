@@ -14,14 +14,11 @@ return [
     ],
 
     'oauth' => [
-        // 使用用户中心（抽离后）的 detailinfo 接口
-        'switch_to_detail_info' => env('UC_OAUTH_SWITCH_TO_DETAIL_INFO', false),
-
         // OAuth登入回调过程中的“获取用户信息”接口地址
-        'auth_url'              => env('UC_OAUTH_URL'),
+        'auth_url'     => env('UC_OAUTH_URL'),
 
         // 登录成功后的跳转地址
-        'redirect_url'          => env('UC_OAUTH_REDIRECT', '/'),
+        'redirect_url' => env('UC_OAUTH_REDIRECT', '/'),
     ],
 
 ];

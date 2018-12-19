@@ -14,13 +14,10 @@ namespace SouthCN\EasyUC;
 class OAuthData
 {
     protected $data;
-    protected $switchToDetailInfo;
 
-    public function __construct($data, bool $switchToDetailInfo = false)
+    public function __construct($data)
     {
-        $this->data               = $data;
-        $this->switchToDetailInfo = $switchToDetailInfo;
-
+        $this->data  = $data;
         $this->super = (0 == $this->group);
     }
 
@@ -30,9 +27,7 @@ class OAuthData
             return $this->data->site_list;
         }
 
-        return $this->switchToDetailInfo
-            ? $this->data->user->$name
-            : $this->data->$name;
+        return $this->data->user->$name;
     }
 
     public function getInnerData()
