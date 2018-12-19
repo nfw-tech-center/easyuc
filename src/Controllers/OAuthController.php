@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use SouthCN\EasyUC\Contracts\UserCenterUser;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
-use SouthCN\EasyUC\OAuthData;
-use SouthCN\EasyUC\UserCenterApi;
+use SouthCN\EasyUC\Repository;
 
 class OAuthController extends Controller
 {
-    protected $api;
+    protected $repository;
 
+    /**
+     * @throws ApiFailedException
+     */
     public function __construct()
     {
-        $this->api = new UserCenterApi;
+        $this->repository = new Repository;
     }
 
     /**
@@ -42,17 +44,15 @@ class OAuthController extends Controller
     {
         /** @var UserCenterUser $user */
         $user = app(UserCenterUser::class);
-        $auth = new OAuthData($this->api->getUserDetailInfo());
 
-        if (!$user->exists($auth->id)) {
-            if (!$auth->super) {
-                throw new UnauthorizedException('管理中心未授权此用户');
-            }
-
-            // 超管不受限
-            $user->createByUid($auth->id);
+        if ($this->repository->super()) {
+            return $user->sync($this->repository->user());
         }
 
-        return $user->update($auth);
+        if ($this->repository->authorized(1)) {
+            return $user->sync($this->repository->user());
+        }
+
+        throw new UnauthorizedException('管理中心未授权此用户');
     }
 }
