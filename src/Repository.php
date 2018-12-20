@@ -7,7 +7,7 @@ use SouthCN\EasyUC\Repositories\User;
 
 class Repository
 {
-    protected $data;
+    public $data;
 
     /**
      * @throws Exceptions\ApiFailedException
