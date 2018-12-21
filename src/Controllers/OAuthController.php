@@ -11,16 +11,6 @@ use SouthCN\EasyUC\Repository;
 
 class OAuthController extends Controller
 {
-    protected $repository;
-
-    /**
-     * @throws ApiFailedException
-     */
-    public function __construct()
-    {
-        $this->repository = new Repository;
-    }
-
     /**
      * 处理 OAuth 回调
      *
@@ -42,17 +32,22 @@ class OAuthController extends Controller
      */
     protected function syncUser()
     {
+        // 初始化时就会调用 detailinfo 接口
+        $repository = new Repository;
+
         /** @var UserCenterUser $user */
         $user = app(UserCenterUser::class);
 
-        if ($this->repository->super()) {
-            return $user->sync($this->repository);
+        // 超管不受任何限制
+        if ($repository->super()) {
+            return $user->sync($repository);
         }
 
         $siteAppId = config('easyuc.site_app_id');
 
-        if ($this->repository->authorized($siteAppId)) {
-            return $user->sync($this->repository);
+        // 非超管需要有 APP 授权
+        if ($repository->authorized($siteAppId)) {
+            return $user->sync($repository);
         }
 
         throw new UnauthorizedException('管理中心未授权此用户');
