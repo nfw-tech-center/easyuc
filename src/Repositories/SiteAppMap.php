@@ -20,6 +20,7 @@ class SiteAppMap
             ->flatten(1)// 压缩结构
             ->pluck('id')// 提取 APP ID
             ->unique()// 排重
+            ->flip()// 翻转 APP ID 为数组 key
             ->has($id);
     }
 
