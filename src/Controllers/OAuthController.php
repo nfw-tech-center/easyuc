@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use SouthCN\EasyUC\Contracts\UserCenterUser;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
+use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
 use SouthCN\EasyUC\Repository;
 
@@ -17,6 +18,7 @@ class OAuthController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws ApiFailedException
      * @throws UnauthorizedException
+     * @throws ConfigUndefinedException
      */
     public function obtainToken()
     {
@@ -29,6 +31,7 @@ class OAuthController extends Controller
      * @return \Illuminate\Contracts\Auth\Authenticatable
      * @throws ApiFailedException
      * @throws UnauthorizedException
+     * @throws ConfigUndefinedException
      */
     protected function syncUser()
     {
@@ -44,6 +47,10 @@ class OAuthController extends Controller
         }
 
         $siteAppId = config('easyuc.site_app_id');
+
+        if (!$siteAppId) {
+            throw new ConfigUndefinedException('请配置UC_SITE_APP_ID');
+        }
 
         // 非超管需要有 APP 授权
         if ($repository->authorized($siteAppId)) {
