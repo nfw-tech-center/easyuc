@@ -59,9 +59,9 @@ php artisan vendor:publish --provider="Abel\EasyUC\ServiceProvider"
 ```
 UC_APP=
 UC_TICKET=
+UC_SITE_APP_ID=
 UC_DEBUG=false
 UC_PREFIX=
-UC_OAUTH_SWITCH_TO_DETAIL_INFO=false
 UC_OAUTH_URL=
 UC_OAUTH_REDIRECT=/
 ```
