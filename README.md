@@ -10,7 +10,9 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 
 ## 主要功能
 
-- OAuth 授权
+- 平台定制版 OAuth 授权
+- 统一登入
+- 统一登出
 
 
 
@@ -46,6 +48,8 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 composer require abelhalo/easyuc
 ```
 
+
+
 ### 配置
 
 如需修改默认配置，可发布配置文件：
@@ -68,6 +72,8 @@ UC_OAUTH_REDIRECT=/
 
 如不了解 ENV 配置项的作用，可先发布配置文件，然后查看配置文件的注释。
 
+
+
 ### 服务提供者
 
 首先在 `AppServiceProvider` 的 `register` 方法添加一行，如：
@@ -81,6 +87,8 @@ public function register()
 
 `App\Repositories\UserCenterUser` 类必须实现 `SouthCN\EasyUC\Contracts\UserCenterUser` 契约，可放在任意目录。
 
+
+
 ### 路由
 
 要确认 Easy UC 的路由是否成功注册，可查看项目中已注册的路由：
@@ -89,11 +97,39 @@ public function register()
 php artisan route:list | grep uc
 ```
 
+
+
 ### 业务逻辑
 
 在`App\Repositories\UserCenterUser` 类编写 APP 内部的业务逻辑。
 
 注：Easy UC 已内置了管理中心应用授权判断逻辑，无需重复实现。
+
+
+
+### 自定义控制器逻辑
+
+Easy UC 会自动注册一条 `uc/obtain-token` 路由，如要定制控制器逻辑，只需自行再注册一条 `uc/obtain-token` 路由：
+
+```php
+// routes/web.php
+Route::get('uc/obtain-token', 'OAuthController@obtainToken');
+
+
+// app/Http/Controllers/OAuthController.php
+namespace App\Http\Controllers;
+
+class OAuthController extends \SouthCN\EasyUC\Controllers\OAuthController
+{
+    public function obtainToken()
+    {
+        parent::obtainToken();
+
+        // 此处演示自定义跳转逻辑
+        return redirect("/#/?token=" . session('token'));
+    }
+}
+```
 
 
 
