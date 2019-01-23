@@ -3,6 +3,7 @@
 namespace SouthCN\EasyUC\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class PlatformLogout
@@ -13,15 +14,17 @@ class PlatformLogout
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
      * @return mixed
-     * @throws \SouthCN\EasyUC\Exceptions\ApiFailedException
      */
     public function handle($request, Closure $next)
     {
-        $token      = session('uc:token');
+        $id         = optional(Auth::user())->uuid;
+        $token      = Cache::get("uc:{$id}:token");
         $logoutPath = config('easyuc.route.logout');
 
         if (Cache::get("uc:$token:logout", false)) {
             if ($logoutPath != $request->path()) {
+                Cache::forget("uc:$token:logout");
+
                 return redirect('logout');
             }
         }

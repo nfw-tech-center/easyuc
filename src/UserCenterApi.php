@@ -51,7 +51,7 @@ class UserCenterApi
         ]);
 
         if (0 !== $response->errcode) {
-            throw new ApiFailedException("调用 $url 接口失败");
+            throw new ApiFailedException("调用 $url 接口失败：$response->errmessage");
         }
     }
 }
