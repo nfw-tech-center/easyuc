@@ -66,7 +66,9 @@ UC_TICKET=
 UC_SITE_APP_ID=
 UC_DEBUG=false
 UC_PREFIX=
+UC_LOGOUT_ROUTE=
 UC_OAUTH_URL=
+UC_OAUTH_LOGOUT=
 UC_OAUTH_REDIRECT=/
 ```
 
@@ -99,6 +101,8 @@ php artisan route:list | grep uc
 
 
 
+## 统一登入
+
 ### 业务逻辑
 
 在`App\Repositories\UserCenterUser` 类编写 APP 内部的业务逻辑。
@@ -128,6 +132,32 @@ class OAuthController extends \SouthCN\EasyUC\Controllers\OAuthController
         // 此处演示自定义跳转逻辑
         return redirect("/#/?token=" . session('token'));
     }
+}
+```
+
+
+
+## 统一登出
+
+### 中间件
+
+平台 APP 需要在适当位置添加 `\SouthCN\EasyUC\Middleware\PlatformLogout::class` 中间件，以监听平台统一登出状态。
+
+
+
+### 控制器
+
+以 Laravel 默认的配置为例，默认的登出路径是 `POST /logout`，对应 `'Auth\LoginController@logout'`。为接入统一登出，需要修改 `'Auth\LoginController@logout'` 方法：
+
+```php
+// app/Http/Controllers/Auth/LoginController.php
+
+public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
+{
+    // 通知平台用户中心进行统一登出操作
+    $ucApi->logout();
+
+    // 原有登出逻辑……
 }
 ```
 

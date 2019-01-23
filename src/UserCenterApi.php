@@ -3,6 +3,8 @@
 namespace SouthCN\EasyUC;
 
 use AbelHalo\ApiProxy\ApiProxy;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 
 class UserCenterApi
@@ -43,11 +45,12 @@ class UserCenterApi
      */
     public function logout(): void
     {
-        $url = config('easyuc.oauth.logout_url');
+        $user = Auth::user()->uuid;
+        $url  = config('easyuc.oauth.logout_url');
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
-            'logout_token' => session('uc:token'),
+            'logout_token' => Cache::get("uc:{$user}:token"),
         ]);
 
         if (0 !== $response->errcode) {
