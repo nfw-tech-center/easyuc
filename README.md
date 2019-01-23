@@ -27,7 +27,7 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 
 ### 登入
 
-1. APP 判断当前未登入，跳去平台用户中心登入页面
+1. APP 判断当前未登入，跳去平台用户中心登入页面（示例：`http(s)://platform.domain/usercenter/login?appid=应用注册的值`）
 2. 平台用户中心登入成功后，会回调跳转到 APP 提供的回调地址（默认 `http(s)://platform-app.domain/uc/obtain-token`）
 3. Easy UC 注册的 `uc/obtain-token` 路由接手登入回调过程，自动调用 Laravel 的 `Auth:login` 方法实现 APP 内登入
 

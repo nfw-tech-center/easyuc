@@ -14,11 +14,17 @@ return [
     'route' => [
         // 暴露给用户中心的接口url前缀
         'prefix' => env('UC_PREFIX'),
+
+        // 业务系统的登出路径
+        'logout' => env('UC_LOGOUT_ROUTE'),
     ],
 
     'oauth' => [
         // OAuth登入回调过程中的“获取用户信息”接口地址
         'auth_url'     => env('UC_OAUTH_URL'),
+
+        // OAuth登入回调过程中的“获取用户信息”接口地址
+        'logout_url'   => env('UC_OAUTH_LOGOUT'),
 
         // 登录成功后的跳转地址
         'redirect_url' => env('UC_OAUTH_REDIRECT', '/'),

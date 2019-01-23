@@ -2,12 +2,15 @@
 
 namespace SouthCN\EasyUC\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use SouthCN\EasyUC\Contracts\UserCenterUser;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
+use SouthCN\EasyUC\PlatformResponse;
 use SouthCN\EasyUC\Repository;
 
 class OAuthController extends Controller
@@ -25,6 +28,19 @@ class OAuthController extends Controller
         Auth::login($this->syncUser());
 
         return redirect(config('easyuc.oauth.redirect_url'));
+    }
+
+    /**
+     * 平台统一登出
+     *
+     * @param Request $request
+     * @return PlatformResponse
+     */
+    public function acceptLogoutSignal(Request $request)
+    {
+        Cache::forever("uc:$request->logout_token:logout", true);
+
+        return new PlatformResponse(0, 'ok');
     }
 
     /**

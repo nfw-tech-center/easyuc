@@ -2,6 +2,8 @@
 
 namespace SouthCN\EasyUC;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 use SouthCN\EasyUC\Repositories\SiteAppMap;
 use SouthCN\EasyUC\Repositories\User;
 
@@ -15,6 +17,11 @@ class Repository
     public function __construct()
     {
         $this->data = (new UserCenterApi)->getUserDetailInfo();
+
+        $token = $this->data->logout_token;
+
+        Session::put('uc:token', $token);
+        Cache::forever("uc:{$token}", true);
     }
 
     /**
