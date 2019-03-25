@@ -83,7 +83,10 @@ UC_OAUTH_REDIRECT=/
 ```php
 public function register()
 {
-    $this->app->bind(\SouthCN\EasyUC\Contracts\UserCenterUser::class, \App\Repositories\UserCenterUser::class);
+    $this->app->bind(
+        \SouthCN\EasyUC\Contracts\UserCenterUser::class,
+        \App\Repositories\UserCenterUser::class
+    );
 }
 ```
 

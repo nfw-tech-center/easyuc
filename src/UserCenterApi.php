@@ -56,11 +56,11 @@ class UserCenterApi
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
-            'logout_token' => Cache::get("uc:{$user}:token"),
+            'logout_token' => $token = Cache::get("uc:{$user}:token"),
         ]);
 
         if (0 !== $response->errcode) {
-            throw new ApiFailedException("调用 $url 接口失败：$response->errmessage");
+            throw new ApiFailedException("调用 $url 接口失败：{$response->errmessage}（Token={$token}）");
         }
     }
 }
