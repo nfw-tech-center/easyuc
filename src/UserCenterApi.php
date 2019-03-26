@@ -52,8 +52,8 @@ class UserCenterApi
             throw new ConfigUndefinedException('请配置UC_OAUTH_LOGOUT');
         }
 
-        // 被动登出情景下，无需再向用户中心通知登出
         if (UC::signal()->checkLogout()) {
+            // 被动登出情景下，无需再向用户中心通知登出
             UC::signal()->unsetLogout();
 
             return;

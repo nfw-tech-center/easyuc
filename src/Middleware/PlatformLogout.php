@@ -3,6 +3,7 @@
 namespace SouthCN\EasyUC\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Services\UC;
 
@@ -22,6 +23,11 @@ class PlatformLogout
 
         if (!$logoutPath) {
             throw new ConfigUndefinedException('请配置UC_LOGOUT_ROUTE');
+        }
+
+        if (Auth::guest()) {
+            // 未登入时，无需检查统一登出信号
+            return $next($request);
         }
 
         if (UC::signal()->checkLogout()) {
