@@ -6,18 +6,25 @@ use Illuminate\Support\Facades\Cache;
 
 class Signal
 {
-    public function setLogout(string $token): void
+    protected $key;
+
+    public function __construct(string $token)
     {
-        Cache::forever("uc:$token:logout", true);
+        $this->key = "uc:$token:logout";
     }
 
-    public function checkLogout(string $token): bool
+    public function setLogout(): void
     {
-        return Cache::get("uc:$token:logout", false);
+        Cache::forever($this->key, true);
     }
 
-    public function unsetLogout(string $token): void
+    public function checkLogout(): bool
     {
-        Cache::forget("uc:$token:logout");
+        return Cache::get($this->key, false);
+    }
+
+    public function unsetLogout(): void
+    {
+        Cache::forget($this->key);
     }
 }

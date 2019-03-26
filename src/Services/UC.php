@@ -9,7 +9,9 @@ class UC
 {
     public static function signal()
     {
-        return new Signal;
+        return new Signal(
+            static::token()->getLogout()
+        );
     }
 
     public static function token()

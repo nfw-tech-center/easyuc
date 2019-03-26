@@ -24,9 +24,7 @@ class PlatformLogout
             throw new ConfigUndefinedException('请配置UC_LOGOUT_ROUTE');
         }
 
-        $token = UC::token()->getLogout();
-
-        if (UC::signal()->checkLogout($token)) {
+        if (UC::signal()->checkLogout()) {
             if ($logoutPath != $request->path()) {
                 return redirect('logout');
             }

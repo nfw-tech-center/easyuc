@@ -52,14 +52,14 @@ class UserCenterApi
             throw new ConfigUndefinedException('请配置UC_OAUTH_LOGOUT');
         }
 
-        $token = UC::token()->getLogout();
-
         // 被动登出情景下，无需再向用户中心通知登出
-        if (UC::signal()->checkLogout($token)) {
-            UC::signal()->unsetLogout($token);
+        if (UC::signal()->checkLogout()) {
+            UC::signal()->unsetLogout();
 
             return;
         }
+
+        $token = UC::token()->getLogout();
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
