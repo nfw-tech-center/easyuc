@@ -28,8 +28,6 @@ class PlatformLogout
 
         if (UC::signal()->checkLogout($token)) {
             if ($logoutPath != $request->path()) {
-                UC::signal()->unsetLogout($token);
-
                 return redirect('logout');
             }
         }

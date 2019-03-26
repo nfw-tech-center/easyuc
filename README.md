@@ -33,8 +33,9 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 
 ### 登出
 
-1. APP 内部做登出处理，比如 `Auth:logout` ，完成 APP 级登出
-2. 跳转去平台用户中心的登出地址，完成平台级登出
+1. APP 内部做登出处理，比如 `Auth:logout` ，完成 APP 层面登出
+2. 向平台用户中心发送登出信号，以通知平台应用进行统一登出
+3. 跳转去平台用户中心的登出地址，完成平台层面登出
 
 
 
@@ -144,13 +145,13 @@ class OAuthController extends \SouthCN\EasyUC\Controllers\OAuthController
 
 ### 中间件
 
-平台 APP 需要在适当位置添加 `\SouthCN\EasyUC\Middleware\PlatformLogout::class` 中间件，以监听平台统一登出状态。
+平台 APP 需要在适当位置添加 `\SouthCN\EasyUC\Middleware\PlatformLogout::class` 中间件，以监听平台统一登出信号。
 
 
 
 ### 控制器
 
-以 Laravel 默认的配置为例，默认的登出路径是 `POST /logout`，对应 `'Auth\LoginController@logout'`。为接入统一登出，需要修改 `'Auth\LoginController@logout'` 方法：
+以 Laravel 默认配置为例，默认的登出路径是 `POST /logout`，对应 `'Auth\LoginController@logout'`。为接入统一登出，需要修改 `'Auth\LoginController@logout'` 方法：
 
 ```php
 // app/Http/Controllers/Auth/LoginController.php
@@ -158,6 +159,8 @@ class OAuthController extends \SouthCN\EasyUC\Controllers\OAuthController
 public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 {
     // 通知平台用户中心进行统一登出操作
+	  // 被动登出情景下，无需再向用户中心通知登出
+	  // 此方法已自动处理此情景
     $ucApi->logout();
 
     // 原有登出逻辑……
