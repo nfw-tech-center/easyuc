@@ -5,13 +5,13 @@ namespace SouthCN\EasyUC\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use SouthCN\EasyUC\Contracts\UserCenterUser;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
 use SouthCN\EasyUC\PlatformResponse;
 use SouthCN\EasyUC\Repository;
+use SouthCN\EasyUC\Services\UC;
 
 class OAuthController extends Controller
 {
@@ -38,7 +38,7 @@ class OAuthController extends Controller
      */
     public function acceptLogoutSignal(Request $request)
     {
-        Cache::forever("uc:$request->logout_token:logout", true);
+        UC::signal()->setLogout($request->logout_token);
 
         return new PlatformResponse(0, 'ok');
     }

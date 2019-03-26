@@ -5,6 +5,7 @@ namespace SouthCN\EasyUC;
 use Illuminate\Support\Facades\Cache;
 use SouthCN\EasyUC\Repositories\SiteAppMap;
 use SouthCN\EasyUC\Repositories\User;
+use SouthCN\EasyUC\Services\UC;
 
 class Repository
 {
@@ -19,7 +20,7 @@ class Repository
 
         $token = $this->data->logout_token;
 
-        Cache::forever("uc:{$this->user()->id}:token", $token);
+        UC::token()->setLogout($token);
         Cache::forever("uc:{$token}", true);
     }
 
