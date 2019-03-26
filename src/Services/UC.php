@@ -10,7 +10,7 @@ class UC
     public static function signal()
     {
         return new Signal(
-            static::token()->getLogout()
+            static::token()->getLogout() ?: ''
         );
     }
 
