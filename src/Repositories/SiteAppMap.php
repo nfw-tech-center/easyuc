@@ -24,8 +24,21 @@ class SiteAppMap
             ->has($id);
     }
 
+    /**
+     * 直接返回用户拥有的所有站点，无论是否有本应用权限
+     */
     public function sites(): Collection
     {
         return collect($this->data);
+    }
+
+    /**
+     * 返回用户开启了本应用权限的站点
+     */
+    public function sitesWithAppPermission(int $app): Collection
+    {
+        return collect($this->data)->reject(function ($site) use ($app) {
+            return !collect($site->app_list)->pluck('id')->flip()->has($app);
+        });
     }
 }
