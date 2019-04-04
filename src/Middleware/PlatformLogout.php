@@ -12,8 +12,8 @@ class PlatformLogout
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
      * @return mixed
      * @throws ConfigUndefinedException
      */
@@ -32,7 +32,9 @@ class PlatformLogout
 
         if (UC::signal()->checkLogout()) {
             if ($logoutPath != $request->path()) {
-                return redirect('logout');
+                $request->session()->invalidate();
+
+                return redirect(env('UC_LOGIN_URL'));
             }
         }
 
