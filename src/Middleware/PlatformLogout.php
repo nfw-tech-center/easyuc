@@ -21,10 +21,6 @@ class PlatformLogout
     {
         $logoutPath = config('easyuc.route.logout');
 
-        if (!$logoutPath) {
-            throw new ConfigUndefinedException('请配置UC_LOGOUT_ROUTE');
-        }
-
         if (Auth::guest()) {
             // 未登入时，无需检查统一登出信号
             return $next($request);

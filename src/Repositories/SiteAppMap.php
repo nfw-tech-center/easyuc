@@ -13,15 +13,9 @@ class SiteAppMap
         $this->data = $data;
     }
 
-    public function hasApp(int $id): bool
+    public function hasApp(): bool
     {
-        return collect($this->data)
-            ->pluck('app_list')// 提取每个站点的 app_list
-            ->flatten(1)// 压缩结构
-            ->pluck('id')// 提取 APP ID
-            ->unique()// 排重
-            ->flip()// 翻转 APP ID 为数组 key
-            ->has($id);
+        return collect($this->data)->count();
     }
 
     /**

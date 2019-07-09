@@ -2,6 +2,7 @@
 
 namespace SouthCN\EasyUC\Controllers;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -58,9 +59,9 @@ class PlatformOAuthController extends Controller
      * @throws UnauthorizedException
      * @throws ConfigUndefinedException
      */
-    protected function syncUser()
+    protected function syncUser(): Authenticatable
     {
-        // 初始化时就会调用 detailinfo 接口
+        // 初始化时会调用「获取用户详细信息」接口
         $this->repository = new Repository;
 
         /** @var UserCenterUser $user */
@@ -71,14 +72,8 @@ class PlatformOAuthController extends Controller
             return $user->sync($this->repository);
         }
 
-        $siteAppId = config('easyuc.site_app_id');
-
-        if (!$siteAppId) {
-            throw new ConfigUndefinedException('请配置UC_SITE_APP_ID');
-        }
-
         // 非超管需要有 APP 授权
-        if ($this->repository->authorized($siteAppId)) {
+        if ($this->repository->authorized()) {
             return $user->sync($this->repository);
         }
 

@@ -23,15 +23,15 @@ class Repository
      */
     public function super(): bool
     {
-        return 0 === $this->user()->group;
+        return $this->user()->group <= 1;
     }
 
     /**
-     * 按 ID 确认用户是否拥有 app 的权限
+     * 确认用户拥有的站点中，是否拥有本应用的权限
      */
-    public function authorized($appId): bool
+    public function authorized(): bool
     {
-        return $this->siteAppMap()->hasApp($appId);
+        return $this->siteAppMap()->hasApp();
     }
 
     /**
