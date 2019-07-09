@@ -209,10 +209,6 @@ UC_BASE_URL=用户中心域名
 
 
 
-`SouthCN\EasyUC\Contracts\UserCenterUser` 契约已被移除
-
-
-
 如 APP 本身有用到旧版的 `abelhalo/api-proxy` 扩展包，请升级：
 
 ```
@@ -220,6 +216,14 @@ composer update abelhalo/api-proxy
 ```
 
 
+
+其它：
+
+- `SouthCN\EasyUC\Contracts\UserCenterUser` 契约已被移除
+
+- `SouthCN\EasyUC\Repository` 的方法及属性有大量变更，请根据源码同步更改
+
+  
 
 ### 从 v1.x 升级
 

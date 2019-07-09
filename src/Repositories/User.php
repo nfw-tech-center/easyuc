@@ -11,8 +11,8 @@ namespace SouthCN\EasyUC\Repositories;
  */
 class User
 {
+    public $super;
     protected $data;
-    protected $super;
 
     public function __construct($data)
     {
