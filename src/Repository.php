@@ -4,6 +4,7 @@ namespace SouthCN\EasyUC;
 
 use SouthCN\EasyUC\Repositories\SiteAppMap;
 use SouthCN\EasyUC\Repositories\User;
+use SouthCN\EasyUC\Repositories\UserCenterApi;
 
 class Repository
 {

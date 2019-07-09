@@ -1,10 +1,9 @@
 <?php
 
-namespace SouthCN\EasyUC;
+namespace SouthCN\EasyUC\Repositories;
 
 use AbelHalo\ApiProxy\ApiProxy;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
-use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Services\UC;
 
 class UserCenterApi
@@ -17,22 +16,20 @@ class UserCenterApi
     }
 
     /**
-     * 调取用户中心的「获取用户详细信息」接口
+     * 用户中心「获取用户详细信息」接口
      *
-     * @param  bool        $filterSiteApp  只保留开启了本应用的站点的列表
-     * @param  array|null  $serviceAreas   筛选指定的服务区ID
      * @return object
      * @throws ApiFailedException
      */
-    public function getUserDetail(bool $filterSiteApp = false, ?array $serviceAreas = null)
+    public function getUserDetail()
     {
         $url = config('easyuc.oauth.auth_url');
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
             'access_token' => request('access_token'),
-            'site_app_id' => $filterSiteApp ? config('easyuc.site_app_id') : null,
-            'service_area_ids' => is_null($serviceAreas) ? null : implode(',', $serviceAreas),
+            'site_app_id' => config('easyuc.oauth.filter_site_app') ? config('easyuc.site_app_id') : null,
+            'service_area_ids' => null,
         ]);
 
         if (empty($response->data)) {
@@ -43,10 +40,9 @@ class UserCenterApi
     }
 
     /**
-     * 调用用户中心的统一登出接口
+     * 用户中心「统一登出」接口
      *
      * @throws ApiFailedException
-     * @throws ConfigUndefinedException
      */
     public function logout(): void
     {

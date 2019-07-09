@@ -20,6 +20,9 @@ return [
     ],
 
     'oauth' => [
+        // 只保留开启了本应用的站点的列表
+        'filter_site_app' => env('UC_OAUTH_FILTER_SITE_APP', false),
+
         // OAuth登入回调过程中的「获取用户详细信息」接口地址
         'auth_url' => env('UC_BASE_URL') . '/api/oauth/user/detail',
 

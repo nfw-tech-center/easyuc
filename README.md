@@ -182,6 +182,14 @@ UC_OAUTH_LOGOUT
 
 
 
+新增以下 env 配置项，如有发布配置文件，请重新发布：
+
+```
+UC_OAUTH_FILTER_SITE_APP
+```
+
+
+
 部分类名、方法名的命名有变更，如有重写路由、继承、覆写方法等行为，记得同步命名变更：
 
 1. `OAuthController` 已重命名为 `PlatformOAuthController`
