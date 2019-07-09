@@ -9,16 +9,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config.php', 'easyuc'
+            __DIR__ . '/../config.php', 'easyuc'
         );
     }
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes.php');
 
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('easyuc.php'),
+            __DIR__ . '/../config.php' => config_path('easyuc.php'),
         ]);
 
         $this->checkConfig();
