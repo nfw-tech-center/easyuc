@@ -46,7 +46,7 @@ Easy UC 是为方便平台 APP 与平台用户中心对接而打造的 Laravel �
 在 Laravel 项目中引入 Composer 包：
 
 ```shell
-composer require abelhalo/easyuc
+composer require southcn/easyuc
 ```
 
 
@@ -56,21 +56,18 @@ composer require abelhalo/easyuc
 如需修改默认配置，可发布配置文件：
 
 ```php
-php artisan vendor:publish --provider="Abel\EasyUC\ServiceProvider"
+php artisan vendor:publish --provider="SouthCN\EasyUC\ServiceProvider"
 ```
 
-在项目 `.env` 文件里加上如下配置项：
+在项目 `.env` 文件里加上如下**必要**的配置项：
 
 ```
 UC_APP=
 UC_TICKET=
 UC_SITE_APP_ID=
-UC_DEBUG=false
-UC_PREFIX=
 UC_LOGOUT_ROUTE=
-UC_OAUTH_URL=
-UC_OAUTH_LOGOUT=
-UC_OAUTH_REDIRECT=/
+UC_OAUTH_REDIRECT=
+UC_BASE_URL=
 ```
 
 如不了解 ENV 配置项的作用，可先发布配置文件，然后查看配置文件的注释。
@@ -86,7 +83,7 @@ public function register()
 {
     $this->app->bind(
         \SouthCN\EasyUC\Contracts\UserCenterUser::class,
-        \App\Repositories\UserCenterUser::class
+        \App\Repositories\UserCenterUserHandler::class
     );
 }
 ```
@@ -190,6 +187,8 @@ UC_OAUTH_FILTER_SITE_APP=true
 
 # 开发时可置为all，表示不限制IP
 UC_OAUTH_TRUSTED_IP=all
+
+UC_BASE_URL=用户中心域名
 ```
 
 
@@ -206,6 +205,10 @@ UC_OAUTH_TRUSTED_IP=all
 命名空间变更：
 
 1. `UserCenterApi` 类现位于 `SouthCN\EasyUC\Repositories` 下
+
+
+
+`SouthCN\EasyUC\Contracts\UserCenterUser` 契约已被移除
 
 
 

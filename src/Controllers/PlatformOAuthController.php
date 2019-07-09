@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use SouthCN\EasyUC\Contracts\UserCenterUser;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
@@ -66,12 +65,11 @@ class PlatformOAuthController extends Controller
         // 初始化时会调用「获取用户详细信息」接口
         $this->repository = new Repository;
 
-        /** @var UserCenterUser $user */
-        $user = app(UserCenterUser::class);
+        $userHandler = app('easyuc.user.handler');
 
         // 需要有 APP 授权才可进入，即使是超管
         if ($this->repository->authorized()) {
-            return $user->sync($this->repository);
+            return $userHandler($this->repository);
         }
 
         throw new UnauthorizedException('管理中心未授权此用户');
