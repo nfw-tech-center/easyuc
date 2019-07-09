@@ -171,6 +171,15 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 ## 版本升级
 
+### 从 v2.x 升级
+
+部分类名、方法名的命名有变更，如有重写路由、继承、覆写方法等行为，记得同步命名变更：
+
+1. `OAuthController` 已重命名为 `PlatformOAuthController`
+2. `OAuthController@obtainToken` 已重命名为 `PlatformOAuthController@login`
+
+
+
 ### 从 v1.x 升级
 
 更新 `composer.json` 信息：

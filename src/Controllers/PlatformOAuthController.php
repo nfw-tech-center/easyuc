@@ -13,7 +13,7 @@ use SouthCN\EasyUC\PlatformResponse;
 use SouthCN\EasyUC\Repository;
 use SouthCN\EasyUC\Services\UC;
 
-class OAuthController extends Controller
+class PlatformOAuthController extends Controller
 {
     /**
      * @var Repository
@@ -21,14 +21,13 @@ class OAuthController extends Controller
     protected $repository;
 
     /**
-     * 处理 OAuth 回调
+     * 处理平台 OAuth 回调，并实现统一登入
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws ApiFailedException
      * @throws UnauthorizedException
      * @throws ConfigUndefinedException
      */
-    public function obtainToken()
+    public function login()
     {
         Auth::login($this->syncUser());
 
@@ -43,7 +42,7 @@ class OAuthController extends Controller
      * 平台统一登出
      * 此方法由用户中心服务端调用，因此是处于***无状态环境***
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return PlatformResponse
      */
     public function acceptLogoutSignal(Request $request)
