@@ -7,14 +7,18 @@ namespace SouthCN\EasyUC\Repositories;
  * @property-read string name
  * @property-read string email
  * @property-read int    group
+ * @property-read bool   super
  */
 class User
 {
     protected $data;
+    protected $super;
 
     public function __construct($data)
     {
         $this->data = $data;
+
+        $this->super = ($this->group <= 1);
     }
 
     public function __get($name)
