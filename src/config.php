@@ -23,6 +23,9 @@ return [
         // 只保留开启了本应用的站点的列表
         'filter_site_app' => env('UC_OAUTH_FILTER_SITE_APP', true),
 
+        // 用户中心服务器IP
+        'ip' => env('UC_OAUTH_TRUSTED_IP'),
+
         // OAuth登入回调过程中的「获取用户详细信息」接口地址
         'auth_url' => env('UC_BASE_URL') . '/api/oauth/user/detail',
 

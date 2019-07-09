@@ -21,6 +21,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if (!config('easyuc.route.logout')) {
             throw new ConfigUndefinedException('请配置UC_LOGOUT_ROUTE');
         }
+
+        if (!config('easyuc.oauth.ip')) {
+            throw new ConfigUndefinedException('请配置UC_OAUTH_TRUSTED_IP');
+        }
     }
 
     public function register()

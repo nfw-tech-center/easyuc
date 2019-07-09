@@ -40,14 +40,16 @@ class PlatformOAuthController extends Controller
     }
 
     /**
-     * 平台统一登出
-     * 此方法由用户中心服务端调用，因此是处于***无状态环境***
-     *
-     * @param  Request  $request
-     * @return PlatformResponse
+     * 处理用户中心主动登出
+     * 此方法由用户中心服务端调用，因此是处于【无状态环境】
      */
-    public function acceptLogoutSignal(Request $request)
+    public function logout(Request $request)
     {
+        if ($ucHost = config('easyuc.oauth.ip')) {
+            ('all' == $ucHost || $ucHost == $request->ip())
+            or abort(403, "信号并非来自可信的用户中心IP：{$request->ip()}");
+        }
+
         UC::signal($request->logout_token)->setLogout();
 
         return new PlatformResponse(0, 'ok');
@@ -67,12 +69,7 @@ class PlatformOAuthController extends Controller
         /** @var UserCenterUser $user */
         $user = app(UserCenterUser::class);
 
-        // 超管不受任何限制
-        if ($this->repository->super()) {
-            return $user->sync($this->repository);
-        }
-
-        // 非超管需要有 APP 授权
+        // 需要有 APP 授权才可进入，即使是超管
         if ($this->repository->authorized()) {
             return $user->sync($this->repository);
         }

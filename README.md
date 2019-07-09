@@ -185,7 +185,11 @@ UC_OAUTH_LOGOUT
 新增以下 env 配置项，如有发布配置文件，请重新发布：
 
 ```
-UC_OAUTH_FILTER_SITE_APP
+# 如无特殊需求，请始终置为true
+UC_OAUTH_FILTER_SITE_APP=true
+
+# 开发时可置为all，表示不限制IP
+UC_OAUTH_TRUSTED_IP=all
 ```
 
 
@@ -194,6 +198,14 @@ UC_OAUTH_FILTER_SITE_APP
 
 1. `OAuthController` 已重命名为 `PlatformOAuthController`
 2. `OAuthController@obtainToken` 已重命名为 `PlatformOAuthController@login`
+2. `OAuthController@acceptLogoutSignal` 已重命名为 `PlatformOAuthController@logout`
+2. `UserCenterApi@getUserDetailInfo` 已重命名为 `UserCenterApi@getUserDetail`
+
+
+
+命名空间变更：
+
+1. `UserCenterApi` 类现位于 `SouthCN\EasyUC\Repositories` 下
 
 
 
