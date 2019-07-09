@@ -14,7 +14,7 @@ class Repository
      */
     public function __construct()
     {
-        $this->data = (new UserCenterApi)->getUserDetailInfo();
+        $this->data = (new UserCenterApi)->getUserDetail();
     }
 
     /**

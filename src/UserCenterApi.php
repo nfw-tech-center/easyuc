@@ -13,22 +13,26 @@ class UserCenterApi
 
     public function __construct()
     {
-        $this->proxy = (new ApiProxy)->setReturnAs('object');
+        $this->proxy = (new ApiProxy)->returnAsObject();
     }
 
     /**
-     * 调取用户中心的“用户详细数据”接口
+     * 调取用户中心的「获取用户详细信息」接口
      *
+     * @param  bool        $filterSiteApp  只保留开启了本应用的站点的列表
+     * @param  array|null  $serviceAreas   筛选指定的服务区ID
      * @return object
      * @throws ApiFailedException
      */
-    public function getUserDetailInfo()
+    public function getUserDetail(bool $filterSiteApp = false, ?array $serviceAreas = null)
     {
         $url = config('easyuc.oauth.auth_url');
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
             'access_token' => request('access_token'),
+            'site_app_id' => $filterSiteApp ? config('easyuc.site_app_id') : null,
+            'service_area_ids' => is_null($serviceAreas) ? null : implode(',', $serviceAreas),
         ]);
 
         if (empty($response->data)) {
@@ -39,7 +43,7 @@ class UserCenterApi
     }
 
     /**
-     * 调用平台统一登出接口
+     * 调用用户中心的统一登出接口
      *
      * @throws ApiFailedException
      * @throws ConfigUndefinedException
@@ -47,10 +51,6 @@ class UserCenterApi
     public function logout(): void
     {
         $url = config('easyuc.oauth.logout_url');
-
-        if (!$url) {
-            throw new ConfigUndefinedException('请配置UC_OAUTH_LOGOUT');
-        }
 
         if (UC::signal()->checkLogout()) {
             // 被动登出情景下，无需再向用户中心通知登出

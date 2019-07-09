@@ -173,10 +173,27 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 ### 从 v2.x 升级
 
+移除以下不再用到的 env 配置项：
+
+```
+UC_OAUTH_URL
+UC_OAUTH_LOGOUT
+```
+
+
+
 部分类名、方法名的命名有变更，如有重写路由、继承、覆写方法等行为，记得同步命名变更：
 
 1. `OAuthController` 已重命名为 `PlatformOAuthController`
 2. `OAuthController@obtainToken` 已重命名为 `PlatformOAuthController@login`
+
+
+
+如 APP 本身有用到旧版的 `abelhalo/api-proxy` 扩展包，请升级：
+
+```
+composer update abelhalo/api-proxy
+```
 
 
 
