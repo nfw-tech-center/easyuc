@@ -6,8 +6,8 @@ class SiteList
 {
     public $data;
 
-    public function __construct(array $data)
+    public function __construct(?array $data)
     {
-        $this->data = $data;
+        $this->data = is_null($data) ? [] : $data;
     }
 }
