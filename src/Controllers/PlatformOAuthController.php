@@ -12,6 +12,7 @@ use SouthCN\EasyUC\Exceptions\UnauthorizedException;
 use SouthCN\EasyUC\PlatformResponse;
 use SouthCN\EasyUC\Repositories\UserCenterAPI;
 use SouthCN\EasyUC\Repository;
+use SouthCN\EasyUC\Service;
 use SouthCN\EasyUC\Services\UC;
 
 class PlatformOAuthController extends Controller
@@ -32,9 +33,7 @@ class PlatformOAuthController extends Controller
     {
         Auth::login($this->syncUser());
 
-        UC::token()->setLogout(
-            $this->repository->token->logout
-        );
+        Service::token()->logout = $this->repository->token->logout;
 
         return redirect(config('easyuc.oauth.redirect_url'));
     }
@@ -56,7 +55,6 @@ class PlatformOAuthController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Auth\Authenticatable
      * @throws ApiFailedException
      * @throws UnauthorizedException
      * @throws ConfigUndefinedException

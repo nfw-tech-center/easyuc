@@ -4,6 +4,7 @@ namespace SouthCN\EasyUC\Repositories;
 
 use AbelHalo\ApiProxy\ApiProxy;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
+use SouthCN\EasyUC\Service;
 use SouthCN\EasyUC\Services\UC;
 
 class UserCenterAPI
@@ -55,7 +56,7 @@ class UserCenterAPI
             return;
         }
 
-        $token = UC::token()->getLogout();
+        $token = Service::token()->logout;
 
         /** @var object $response */
         $response = $this->proxy->post($url, [

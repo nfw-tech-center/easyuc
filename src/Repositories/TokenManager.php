@@ -4,27 +4,31 @@ namespace SouthCN\EasyUC\Repositories;
 
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @property string $logout
+ */
 class TokenManager
 {
-    protected $key;
+    protected $uid;
+    protected $logout;
 
-    /**
-     * TokenManager constructor.
-     *
-     * @param string $uid 用户中心UID
-     */
     public function __construct(string $uid)
     {
-        $this->key = "uc:$uid:token";
+        $this->uid = $uid;
     }
 
-    public function setLogout(string $token): void
+    public function __set(string $name, string $value): void
     {
-        Cache::forever($this->key, $token);
+        Cache::forever($this->key($name), $value);
     }
 
-    public function getLogout(): ?string
+    public function __get(string $name): ?string
     {
-        return Cache::get($this->key);
+        return Cache::get($this->key($name));
+    }
+
+    protected function key(string $name): string
+    {
+        return "uc:{$this->uid}:token:$name";
     }
 }
