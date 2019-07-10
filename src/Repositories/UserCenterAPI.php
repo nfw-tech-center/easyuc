@@ -54,7 +54,9 @@ class UserCenterAPI
      */
     public function getSiteList(): array
     {
-        $response = PrivateApi::app('easyuc')->api('sync-site-list');
+        $response = PrivateApi::app('easyuc')->api('sync-site-list', [
+            'site_app_id' => config('easyuc.site_app_id'),
+        ]);
 
         return $response->data->list;
     }
