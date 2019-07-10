@@ -46,15 +46,14 @@ class UserCenterAPI
      */
     public function logout(): void
     {
-        $url = config('easyuc.oauth.logout_url');
+        $url   = config('easyuc.oauth.logout_url');
+        $token = Service::token()->logout;
 
         // 被动登出情景下，无需再向用户中心通知登出
         if (Service::logoutSignal()->check()) {
             Service::logoutSignal()->clear();
             return;
         }
-
-        $token = Service::token()->logout;
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
