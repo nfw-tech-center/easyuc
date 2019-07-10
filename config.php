@@ -13,10 +13,10 @@ return [
 
     'route' => [
         // 暴露给用户中心的接口url前缀
-        'prefix' => env('UC_PREFIX'),
+        'prefix' => env('UC_ROUTE_PREFIX'),
 
         // 业务系统的登出路径
-        'logout' => env('UC_LOGOUT_ROUTE'),
+        'logout' => env('UC_ROUTE_LOGOUT'),
     ],
 
     'oauth' => [

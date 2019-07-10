@@ -65,7 +65,7 @@ php artisan vendor:publish --provider="SouthCN\EasyUC\ServiceProvider"
 UC_APP=
 UC_TICKET=
 UC_SITE_APP_ID=
-UC_LOGOUT_ROUTE=
+UC_ROUTE_LOGOUT=
 UC_OAUTH_TRUSTED_IP=
 UC_OAUTH_REDIRECT=
 UC_BASE_URL=
@@ -191,6 +191,13 @@ UC_OAUTH_TRUSTED_IP=all
 
 UC_BASE_URL=用户中心域名
 ```
+
+
+
+以下 env 配置项已更名：
+
+1. `UC_PREFIX` 已更名为 `UC_ROUTE_PREFIX` 
+2. `UC_LOGOUT_ROUTE` 已更名为 `UC_ROUTE_LOGOUT`
 
 
 
