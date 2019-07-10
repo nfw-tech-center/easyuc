@@ -8,19 +8,14 @@ class LogoutSignal
 {
     protected $key;
 
-    public function __construct(string $token)
+    public function __construct(?string $token)
     {
         $this->key = "uc:logout:$token";
     }
 
-    public function setLogout(): void
+    public function set(): void
     {
         Cache::forever($this->key, true);
-    }
-
-    public function checkLogout(): bool
-    {
-        return Cache::get($this->key, false);
     }
 
     public function check(): bool

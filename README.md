@@ -176,6 +176,7 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 ```
 UC_OAUTH_URL
 UC_OAUTH_LOGOUT
+UC_LOGIN_URL
 ```
 
 
@@ -183,6 +184,8 @@ UC_OAUTH_LOGOUT
 新增以下 env 配置项，如有发布配置文件，请重新发布：
 
 ```
+UC_ROUTE_LOGIN=业务系统的登入路径
+
 # 开发时可置为all，表示不限制IP
 UC_OAUTH_TRUSTED_IP=all
 
@@ -225,6 +228,10 @@ composer update abelhalo/api-proxy
 其它：
 
 - `SouthCN\EasyUC\Contracts\UserCenterUser` 契约已被移除
+
+- `SouthCN\EasyUC\Services\UC` 服务已被移除，由 `SouthCN\EasyUC\Service` 接替
+
+- `UC::signal` 的用法已废弃，请使用 `Service::logoutSignal`
 
 - `SouthCN\EasyUC\Repository` 的方法及属性有大量变更，请根据源码同步更改
 
