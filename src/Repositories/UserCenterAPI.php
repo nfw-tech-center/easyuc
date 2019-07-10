@@ -6,7 +6,7 @@ use AbelHalo\ApiProxy\ApiProxy;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Services\UC;
 
-class UserCenterApi
+class UserCenterAPI
 {
     protected $proxy;
 
@@ -21,14 +21,14 @@ class UserCenterApi
      * @return object
      * @throws ApiFailedException
      */
-    public function getUserDetail()
+    public function getUserDetail(string $accessToken)
     {
         $url = config('easyuc.oauth.auth_url');
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
-            'access_token' => request('access_token'),
-            'site_app_id' => config('easyuc.oauth.filter_site_app') ? config('easyuc.site_app_id') : null,
+            'access_token' => $accessToken,
+            'site_app_id' => config('easyuc.site_app_id'),
             'service_area_ids' => null,
         ]);
 

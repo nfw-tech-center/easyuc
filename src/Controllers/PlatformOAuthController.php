@@ -10,6 +10,7 @@ use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 use SouthCN\EasyUC\Exceptions\UnauthorizedException;
 use SouthCN\EasyUC\PlatformResponse;
+use SouthCN\EasyUC\Repositories\UserCenterAPI;
 use SouthCN\EasyUC\Repository;
 use SouthCN\EasyUC\Services\UC;
 
@@ -32,7 +33,7 @@ class PlatformOAuthController extends Controller
         Auth::login($this->syncUser());
 
         UC::token()->setLogout(
-            $this->repository->logoutToken()
+            $this->repository->token->logout
         );
 
         return redirect(config('easyuc.oauth.redirect_url'));
@@ -62,8 +63,9 @@ class PlatformOAuthController extends Controller
      */
     protected function syncUser(): Authenticatable
     {
-        // 初始化时会调用「获取用户详细信息」接口
-        $this->repository = new Repository;
+        $this->repository = new Repository(
+            (new UserCenterAPI)->getUserDetail(request('access_token'))
+        );
 
         $userHandler = app('easyuc.user.handler');
 
