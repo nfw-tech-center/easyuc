@@ -2,7 +2,9 @@
 
 namespace SouthCN\EasyUC\Repositories;
 
+use Abel\PrivateApi\PrivateApi;
 use AbelHalo\ApiProxy\ApiProxy;
+use Illuminate\Support\Facades\Config;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Service;
 
@@ -13,6 +15,14 @@ class UserCenterAPI
     public function __construct()
     {
         $this->proxy = (new ApiProxy)->returnAsObject();
+
+        Config::set('private-api._', ['return_type' => 'object']);
+        Config::set('private-api.easyuc', [
+            'app' => env('UC_APP'),
+            'ticket' => env('UC_TICKET'),
+
+            'sync-site-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/site/list'],
+        ]);
     }
 
     /**
@@ -23,7 +33,7 @@ class UserCenterAPI
      */
     public function getUserDetail(string $accessToken)
     {
-        $url = config('easyuc.oauth.auth_url');
+        $url = config('easyuc.oauth.base_url') . '/api/oauth/user/detail';
 
         /** @var object $response */
         $response = $this->proxy->post($url, [
@@ -37,6 +47,16 @@ class UserCenterAPI
         }
 
         return $response->data;
+    }
+
+    /**
+     * 用户中心「获取站点列表」接口
+     */
+    public function getSiteList(): array
+    {
+        $response = PrivateApi::app('easyuc')->api('sync-site-list');
+
+        return $response->data->list;
     }
 
     /**
