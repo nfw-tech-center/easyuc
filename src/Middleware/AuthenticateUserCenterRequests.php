@@ -2,16 +2,16 @@
 
 namespace SouthCN\EasyUC\Middleware;
 
-use SouthCN\EasyUC\PlatformResponse;
 use Closure;
+use SouthCN\EasyUC\PlatformResponse;
 
 class AuthenticateUserCenterRequests
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure                  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -20,12 +20,12 @@ class AuthenticateUserCenterRequests
             return $next($request);
         }
 
-        if ($request->time < now()->addMinutes(-5)->timestamp) {
+        if ($request->time < now()->subMinutes(5)->timestamp) {
             return $this->errorResponse(30004, '时间不合法');
         }
 
         if ($request->token != $this->calculateToken($request->time)) {
-            return $this->errorResponse(30005, 'token不合法');
+            return $this->errorResponse(30005, 'Token不合法');
         }
 
         return $next($request);

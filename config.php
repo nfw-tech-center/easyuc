@@ -15,6 +15,9 @@ return [
         // 暴露给用户中心的接口url前缀
         'prefix' => env('UC_ROUTE_PREFIX'),
 
+        // 业务系统的登入路径
+        'login' => env('UC_ROUTE_LOGIN'),
+
         // 业务系统的登出路径
         'logout' => env('UC_ROUTE_LOGOUT'),
     ],

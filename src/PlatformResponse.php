@@ -2,7 +2,9 @@
 
 namespace SouthCN\EasyUC;
 
-class PlatformResponse extends \Illuminate\Http\JsonResponse
+use Illuminate\Http\JsonResponse;
+
+class PlatformResponse extends JsonResponse
 {
     public function __construct($code, $message = '', $status = 200)
     {

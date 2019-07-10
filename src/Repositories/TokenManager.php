@@ -27,6 +27,11 @@ class TokenManager
         return Cache::get($this->key($name));
     }
 
+    public function __unset(string $name): void
+    {
+        Cache::forget($this->key($name));
+    }
+
     protected function key(string $name): string
     {
         return "uc:{$this->uid}:token:$name";

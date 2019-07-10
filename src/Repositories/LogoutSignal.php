@@ -4,13 +4,13 @@ namespace SouthCN\EasyUC\Repositories;
 
 use Illuminate\Support\Facades\Cache;
 
-class Signal
+class LogoutSignal
 {
     protected $key;
 
     public function __construct(string $token)
     {
-        $this->key = "uc:$token:logout";
+        $this->key = "uc:logout:$token";
     }
 
     public function setLogout(): void
@@ -23,8 +23,13 @@ class Signal
         return Cache::get($this->key, false);
     }
 
-    public function unsetLogout(): void
+    public function check(): bool
     {
-        Cache::forget($this->key);
+        return Cache::get($this->key, false);
+    }
+
+    public function clear(): bool
+    {
+        return Cache::forget($this->key);
     }
 }

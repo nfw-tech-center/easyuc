@@ -5,7 +5,6 @@ namespace SouthCN\EasyUC\Repositories;
 use AbelHalo\ApiProxy\ApiProxy;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Service;
-use SouthCN\EasyUC\Services\UC;
 
 class UserCenterAPI
 {
@@ -49,10 +48,9 @@ class UserCenterAPI
     {
         $url = config('easyuc.oauth.logout_url');
 
-        if (UC::signal()->checkLogout()) {
-            // 被动登出情景下，无需再向用户中心通知登出
-            UC::signal()->unsetLogout();
-
+        // 被动登出情景下，无需再向用户中心通知登出
+        if (Service::logoutSignal()->check()) {
+            Service::logoutSignal()->clear();
             return;
         }
 

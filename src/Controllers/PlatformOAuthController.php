@@ -13,7 +13,6 @@ use SouthCN\EasyUC\PlatformResponse;
 use SouthCN\EasyUC\Repositories\UserCenterAPI;
 use SouthCN\EasyUC\Repository;
 use SouthCN\EasyUC\Service;
-use SouthCN\EasyUC\Services\UC;
 
 class PlatformOAuthController extends Controller
 {
@@ -49,7 +48,8 @@ class PlatformOAuthController extends Controller
             or abort(403, "信号并非来自可信的用户中心IP：{$request->ip()}");
         }
 
-        UC::signal($request->logout_token)->setLogout();
+        // 发出用户中心登出信号
+        Service::logoutSignal($request->logout_token)->set();
 
         return new PlatformResponse(0, 'ok');
     }
