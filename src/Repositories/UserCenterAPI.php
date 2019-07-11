@@ -54,14 +54,19 @@ class UserCenterAPI
      *
      * @throws ApiFailedException
      */
-    public function getSiteList(?int $siteAppId = null): array
+    public function getSiteList(?int $siteAppId = null, ?array $serviceAreas = null): array
     {
         if (is_null($siteAppId)) {
             $siteAppId = config('easyuc.site_app_id');
         }
 
+        if (!is_null($serviceAreas)) {
+            $serviceAreas = implode(',', $serviceAreas);
+        }
+
         $response = PrivateApi::app('easyuc')->api('sync-site-list', [
             'site_app_id' => $siteAppId,
+            'service_area_ids' => $serviceAreas,
         ]);
 
         if (empty($response->data)) {

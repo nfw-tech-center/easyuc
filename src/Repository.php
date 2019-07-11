@@ -2,6 +2,7 @@
 
 namespace SouthCN\EasyUC;
 
+use SouthCN\EasyUC\Repositories\Data\ServiceAreaList;
 use SouthCN\EasyUC\Repositories\Data\SiteList;
 use SouthCN\EasyUC\Repositories\Data\Token;
 use SouthCN\EasyUC\Repositories\Data\User;
@@ -10,15 +11,17 @@ class Repository
 {
     public $data;
     public $user;
+    public $serviceAreas;
     public $sites;
     public $token;
 
     public function __construct($data)
     {
-        $this->data  = $data;
-        $this->user  = new User($data->user);
-        $this->sites = new SiteList($data->site_list);
-        $this->token = new Token([
+        $this->data         = $data;
+        $this->user         = new User($data->user);
+        $this->serviceAreas = new ServiceAreaList($data->service_area_list);
+        $this->sites        = new SiteList($data->site_list);
+        $this->token        = new Token([
             'access' => request('access_token'),
             'logout' => $data->logout_token,
         ]);

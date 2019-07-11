@@ -22,6 +22,11 @@ class User
         return $this->group <= 1;
     }
 
+    public function serviceAreaAdmin(): bool
+    {
+        return $this->group == 2;
+    }
+
     public function __get($name)
     {
         return $this->data->$name;
