@@ -317,6 +317,7 @@ UC_BASE_URL=用户中心域名
 
 ```
 composer update abelhalo/api-proxy
+composer remove abelhalo/private-api
 ```
 
 

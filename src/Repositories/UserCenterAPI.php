@@ -43,7 +43,7 @@ class UserCenterAPI
         ]);
 
         if (empty($response->data)) {
-            throw new ApiFailedException("调用 $url 接口失败");
+            throw new ApiFailedException("调用 $url 接口失败：{$response->errmessage}");
         }
 
         return $response->data;
@@ -51,6 +51,8 @@ class UserCenterAPI
 
     /**
      * 用户中心「获取站点列表」接口
+     *
+     * @throws ApiFailedException
      */
     public function getSiteList(?int $siteAppId = null): array
     {
@@ -61,6 +63,10 @@ class UserCenterAPI
         $response = PrivateApi::app('easyuc')->api('sync-site-list', [
             'site_app_id' => $siteAppId,
         ]);
+
+        if (empty($response->data)) {
+            throw new ApiFailedException("调用 sync-site-list 接口失败：{$response->errmessage}");
+        }
 
         return $response->data->list;
     }
