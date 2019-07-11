@@ -82,14 +82,103 @@ UC_BASE_URL=
 ```php
 public function register()
 {
-    $this->app->bind(
-        \SouthCN\EasyUC\Contracts\UserCenterUser::class,
-        \App\Repositories\UserCenterUserHandler::class
+  	// 实现了 __invoke 方法的类
+		$this->app->bind('easyuc.user.handler', UserCenterUserHandler::class);
+  
+  	// 或者是一个闭包
+  	$this->app->bind(
+	      'easyuc.user.handler', 
+        function (\SouthCN\EasyUC\Repository $repository) {
+          // 业务逻辑……
+        }
     );
 }
 ```
 
-`App\Repositories\UserCenterUser` 类必须实现 `SouthCN\EasyUC\Contracts\UserCenterUser` 契约，可放在任意目录。
+`UserCenterUserHandler` 类必须实现 `__invoke` 魔术方法，可放在任意目录。
+
+
+
+### 定时任务
+
+因某些用户组的用户在统一登入的 OAuth 回调中，不再携带有站点列表，平台 APP 必须自行实现一个定时任务——每小时拉取一次站点列表。平台 APP 在发生首次登入之前，必须先完整拉取一次站点列表。
+
+假设有这样一个位于 `app/Console/Commands/UserCenterSyncSites.php` 的 Artisan 命令：
+
+```php
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use SouthCN\EasyUC\Repositories\UserCenterAPI;
+
+class UserCenterSyncSites extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'uc:sync-sites';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = '同步站点列表';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        foreach ((new UserCenterAPI)->getSiteList() as $cmsSite) {
+          // 储存站点信息到本地的逻辑……
+          dump($cmsSite);
+        }
+    }
+}
+```
+
+然后配置定时任务：
+
+```php
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
+{
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('uc:sync-sites')->hourly();
+    }
+}
+
+```
 
 
 
@@ -107,7 +196,7 @@ php artisan route:list | grep uc
 
 ### 业务逻辑
 
-在`App\Repositories\UserCenterUser` 类编写 APP 内部的业务逻辑。
+在`UserCenterUserHandler` 类编写 APP 内部的业务逻辑。
 
 注：Easy UC 已内置了管理中心应用授权判断逻辑，无需重复实现。
 
@@ -119,17 +208,17 @@ Easy UC 会自动注册一条 `uc/obtain-token` 路由，如要定制控制器�
 
 ```php
 // routes/web.php
-Route::get('uc/obtain-token', 'OAuthController@obtainToken');
+Route::get('uc/obtain-token', 'PlatformOAuthController@login');
 
 
-// app/Http/Controllers/OAuthController.php
+// app/Http/Controllers/PlatformOAuthController.php
 namespace App\Http\Controllers;
 
-class OAuthController extends \SouthCN\EasyUC\Controllers\OAuthController
+class PlatformOAuthController extends \SouthCN\EasyUC\Controllers\PlatformOAuthController
 {
-    public function obtainToken()
+    public function login()
     {
-        parent::obtainToken();
+        parent::login();
 
         // 此处演示自定义跳转逻辑
         return redirect("/#/?token=" . session('token'));
@@ -170,6 +259,13 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 ## 版本升级
 
 ### 从 v2.x 升级
+
+composer.json 变更：
+
+1. 仓库地址已迁移至 `https://github.com/nfw-tech-center/easyuc.git`
+2. 运行 `composer update southcn/easyuc` 更新 Easy UC 扩展包
+
+
 
 移除以下不再用到的 env 配置项：
 

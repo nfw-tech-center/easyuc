@@ -26,16 +26,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function checkConfig(): void
     {
-        if (!config('easyuc.site_app_id')) {
-            throw new ConfigUndefinedException('请配置UC_SITE_APP_ID');
-        }
-
-        if (!config('easyuc.route.logout')) {
-            throw new ConfigUndefinedException('请配置UC_ROUTE_LOGOUT');
-        }
-
-        if (!config('easyuc.oauth.ip')) {
-            throw new ConfigUndefinedException('请配置UC_OAUTH_TRUSTED_IP');
-        }
+        collect([
+            'easyuc.app' => 'UC_APP',
+            'easyuc.ticket' => 'UC_TICKET',
+            'easyuc.site_app_id' => 'UC_SITE_APP_ID',
+            'easyuc.route.logout' => 'UC_ROUTE_LOGOUT',
+            'easyuc.oauth.ip' => 'UC_OAUTH_TRUSTED_IP',
+            'easyuc.oauth.base_url' => 'UC_BASE_URL',
+        ])->each(function (string $env, string $config) {
+            if (!config($config)) {
+                throw new ConfigUndefinedException("请配置$env");
+            }
+        });
     }
 }

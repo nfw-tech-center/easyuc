@@ -52,10 +52,14 @@ class UserCenterAPI
     /**
      * 用户中心「获取站点列表」接口
      */
-    public function getSiteList(): array
+    public function getSiteList(?int $siteAppId = null): array
     {
+        if (is_null($siteAppId)) {
+            $siteAppId = config('easyuc.site_app_id');
+        }
+
         $response = PrivateApi::app('easyuc')->api('sync-site-list', [
-            'site_app_id' => config('easyuc.site_app_id'),
+            'site_app_id' => $siteAppId,
         ]);
 
         return $response->data->list;
