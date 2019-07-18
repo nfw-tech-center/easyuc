@@ -27,6 +27,11 @@ class User
         return $this->group == 2;
     }
 
+    public function someKindOfAdmin(): bool
+    {
+        return $this->group <= 2;
+    }
+
     public function __get($name)
     {
         return $this->data->$name;
