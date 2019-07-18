@@ -100,5 +100,7 @@ class UserCenterAPI
         if (0 !== $response->errcode) {
             throw new ApiFailedException("调用 $url 接口失败：{$response->errmessage}（Token={$token}）");
         }
+
+        unset(Service::token()->logout);
     }
 }
