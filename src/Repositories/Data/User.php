@@ -10,7 +10,7 @@ namespace SouthCN\EasyUC\Repositories\Data;
  */
 class User
 {
-    protected $data;
+    public $data;
 
     public function __construct($data)
     {
