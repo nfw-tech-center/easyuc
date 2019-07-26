@@ -21,6 +21,7 @@ class UserCenterAPI
             'app' => env('UC_APP'),
             'ticket' => env('UC_TICKET'),
 
+            'sync-org-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/org/list'],
             'sync-site-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/site/list'],
         ]);
     }
@@ -47,6 +48,24 @@ class UserCenterAPI
         }
 
         return $response->data;
+    }
+
+    /**
+     * 用户中心「获取单位列表」接口
+     *
+     * @throws ApiFailedException
+     */
+    public function getOrgList(?array $serviceAreas = null): array
+    {
+        $response = PrivateApi::app('easyuc')->api('sync-org-list', [
+            'service_area_ids' => $serviceAreas,
+        ]);
+
+        if (empty($response->data)) {
+            throw new ApiFailedException("调用 sync-org-list 接口失败：{$response->errmessage}");
+        }
+
+        return $response->data->list;
     }
 
     /**
