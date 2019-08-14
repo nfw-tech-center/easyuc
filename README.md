@@ -256,6 +256,16 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 
 
+## 数据同步
+
+### 同步用户
+
+被动同步（平台触发）
+
+Easy UC 会自动注册 `uc/sync-user` 路由用以平台触发用户同步，同时 `UserCenterUserHandler` 类必须实现 `public function syncUser(SouthCN\EasyUC\Repositories\Data\User $repository)` 方法
+
+
+
 ## 版本升级
 
 ### 从 v2.x 升级
