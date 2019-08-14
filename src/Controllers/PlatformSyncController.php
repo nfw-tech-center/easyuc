@@ -4,18 +4,13 @@ namespace SouthCN\EasyUC\Controllers;
 
 use Illuminate\Routing\Controller;
 use SouthCN\EasyUC\PlatformResponse;
-use SouthCN\EasyUC\Repositories\Data\User;
-use SouthCN\EasyUC\Repositories\UserCenterAPI;
+use SouthCN\EasyUC\Service;
 
 class PlatformSyncController extends Controller
 {
-    public function syncUser(UserCenterAPI $ucAPI)
+    public function syncUser()
     {
-        $userHandler = app('easyuc.user.handler');
-
-        foreach ($ucAPI->getUserList() as $data) {
-            $userHandler->syncUser(new User($data->user));
-        }
+        Service::sync()->users();
 
         return new PlatformResponse(0, 'ok');
     }

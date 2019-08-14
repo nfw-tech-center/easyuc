@@ -4,6 +4,7 @@ namespace SouthCN\EasyUC;
 
 use Illuminate\Support\Facades\Auth;
 use SouthCN\EasyUC\Repositories\LogoutSignal;
+use SouthCN\EasyUC\Repositories\Sync;
 use SouthCN\EasyUC\Repositories\TokenManager;
 
 class Service
@@ -20,5 +21,10 @@ class Service
     public static function token()
     {
         return new TokenManager(Auth::user()->uuid);
+    }
+
+    public static function sync()
+    {
+        return new Sync;
     }
 }

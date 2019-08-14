@@ -2,6 +2,7 @@
 
 namespace SouthCN\EasyUC;
 
+use SouthCN\EasyUC\Commands\UserCenterSyncUsers;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -22,6 +23,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         ]);
 
         $this->checkConfig();
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                UserCenterSyncUsers::class,
+            ]);
+        }
     }
 
     protected function checkConfig(): void
