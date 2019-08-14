@@ -260,9 +260,19 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 ### 同步用户
 
-被动同步（平台触发）
+要实现用户同步功能， `UserCenterUserHandler` 类必须实现 `public function syncUser(SouthCN\EasyUC\Repositories\Data\User $repository)` 方法
 
-Easy UC 会自动注册 `uc/sync-user` 路由用以平台触发用户同步，同时 `UserCenterUserHandler` 类必须实现 `public function syncUser(SouthCN\EasyUC\Repositories\Data\User $repository)` 方法
+**主动同步（命令行触发）**
+
+Easy UC 会自动注册一条 Artisan 命令，用以主动同步：
+
+```
+php artisan uc:sync-users
+```
+
+**被动同步（平台触发）**
+
+Easy UC 会自动注册 `uc/sync-user` 路由用以平台触发用户同步
 
 
 
