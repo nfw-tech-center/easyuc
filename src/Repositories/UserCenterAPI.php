@@ -23,6 +23,7 @@ class UserCenterAPI
 
             'sync-org-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/org/list'],
             'sync-site-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/site/list'],
+            'sync-user-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/user/list'],
         ]);
     }
 
@@ -90,6 +91,24 @@ class UserCenterAPI
 
         if (empty($response->data)) {
             throw new ApiFailedException("调用 sync-site-list 接口失败：{$response->errmessage}");
+        }
+
+        return $response->data->list;
+    }
+
+    /**
+     * 用户中心「获取用户信息列表」接口
+     *
+     * @throws ApiFailedException
+     */
+    public function getUserList(): array
+    {
+        $response = PrivateApi::app('easyuc')->api('sync-user-list', [
+            'site_app_id' => config('easyuc.site_app_id'),
+        ]);
+
+        if (empty($response->data)) {
+            throw new ApiFailedException("调用 sync-user-list 接口失败：{$response->errmessage}");
         }
 
         return $response->data->list;

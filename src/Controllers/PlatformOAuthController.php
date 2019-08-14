@@ -43,11 +43,6 @@ class PlatformOAuthController extends Controller
      */
     public function logout(Request $request)
     {
-        if ($ucHost = config('easyuc.oauth.ip')) {
-            ('all' == $ucHost || $ucHost == $request->ip())
-            or abort(403, "信号并非来自可信的用户中心IP：{$request->ip()}");
-        }
-
         // 发出用户中心登出信号
         Service::logoutSignal($request->logout_token)->set();
 
