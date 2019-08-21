@@ -2,6 +2,7 @@
 
 namespace SouthCN\EasyUC;
 
+use SouthCN\EasyUC\Commands\UserCenterSyncSites;
 use SouthCN\EasyUC\Commands\UserCenterSyncUsers;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 
@@ -27,6 +28,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 UserCenterSyncUsers::class,
+                UserCenterSyncSites::class,
             ]);
         }
     }

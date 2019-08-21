@@ -264,7 +264,7 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 **主动同步（命令行触发）**
 
-Easy UC 会自动注册一条 Artisan 命令，用以主动同步：
+Easy UC 会自动注册一条 Artisan 命令，用于主动同步：
 
 ```
 php artisan uc:sync-users
@@ -272,7 +272,26 @@ php artisan uc:sync-users
 
 **被动同步（平台触发）**
 
-Easy UC 会自动注册 `uc/sync-user` 路由用以平台触发用户同步
+Easy UC 会自动注册 `uc/sync-user` 路由用于平台触发用户同步，同时需要在用户中心的 `site_app` 表配置 `sync_user_url` 字段
+
+
+
+
+### 同步站点
+
+要实现站点同步功能， `UserCenterUserHandler` 类必须实现 `public function syncSites(array $siteList)` 方法
+
+**主动同步（命令行触发）**
+
+Easy UC 会自动注册一条 Artisan 命令，用于主动同步：
+
+```
+php artisan uc:sync-sites
+```
+
+**被动同步（平台触发）**
+
+Easy UC 会自动注册 `uc/sync-sites` 路由用于平台触发站点同步，同时需要在用户中心的 `site_app` 表配置 `sync_org_struct_url` 字段
 
 
 
