@@ -7,18 +7,25 @@ use SouthCN\EasyUC\Repositories\Data\User;
 class Sync
 {
     protected $ucAPI;
+    protected $userHandler;
 
     public function __construct()
     {
-        $this->ucAPI = new UserCenterAPI;
+        $this->ucAPI       = new UserCenterAPI;
+        $this->userHandler = app('easyuc.user.handler');
     }
 
     public function users(): void
     {
-        $userHandler = app('easyuc.user.handler');
-
         foreach ($this->ucAPI->getUserList() as $data) {
-            $userHandler->syncUser(new User($data->user));
+            $this->userHandler->syncUser(new User($data->user));
         }
+    }
+
+    public function sites(): void
+    {
+        $this->userHandler->syncSites(
+            $this->ucAPI->getSiteList()
+        );
     }
 }

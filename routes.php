@@ -13,9 +13,13 @@ Route::prefix(config('easyuc.route.prefix'))->group(function () {
         Route::middleware(TrustUserCenterIP::class)
              ->any('uc/logout', 'SouthCN\EasyUC\Controllers\PlatformOAuthController@logout');
 
-        // 被动同步
+        // 被动同步用户
         Route::middleware(TrustUserCenterIP::class)
              ->post('uc/sync-user', 'SouthCN\EasyUC\Controllers\PlatformSyncController@syncUser');
+
+        // 被动同步站点
+        Route::middleware(TrustUserCenterIP::class)
+             ->post('uc/sync-sites', 'SouthCN\EasyUC\Controllers\PlatformSyncController@syncSites');
     });
 
 });

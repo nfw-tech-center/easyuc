@@ -14,4 +14,11 @@ class PlatformSyncController extends Controller
 
         return new PlatformResponse(0, 'ok');
     }
+
+    public function syncSites()
+    {
+        Service::sync()->sites();
+
+        return new PlatformResponse(0, 'ok');
+    }
 }
