@@ -272,7 +272,9 @@ php artisan uc:sync-users
 
 **被动同步（平台触发）**
 
-Easy UC 会自动注册 `uc/sync-user` 路由用于平台触发用户同步，同时需要在用户中心的 `site_app` 表配置 `sync_user_url` 字段
+1. Easy UC 会自动注册 `uc/sync-user` 路由用于平台触发用户同步
+2. 同时需要在用户中心的 `site_app` 表配置 `sync_user_url` 
+3. **为避免不必要的复杂度，Easy UC 仅实现同步操作，如有其它性能需求，需自行重写对应逻辑**
 
 
 
@@ -291,7 +293,9 @@ php artisan uc:sync-sites
 
 **被动同步（平台触发）**
 
-Easy UC 会自动注册 `uc/sync-sites` 路由用于平台触发站点同步，同时需要在用户中心的 `site_app` 表配置 `sync_org_struct_url` 字段
+1. Easy UC 会自动注册 `uc/sync-sites` 路由用于平台触发站点同步
+2. 同时需要在用户中心的 `site_app` 表配置 `sync_org_struct_url` 字段 
+3. **为避免不必要的复杂度，Easy UC 仅实现同步操作，如有其它性能需求，需自行重写对应逻辑**
 
 
 
