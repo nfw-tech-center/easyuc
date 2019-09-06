@@ -2,6 +2,7 @@
 
 namespace SouthCN\EasyUC\Repositories;
 
+use SouthCN\EasyUC\Repositories\Data\SiteList;
 use SouthCN\EasyUC\Repositories\Data\User;
 
 class Sync
@@ -18,7 +19,7 @@ class Sync
     public function users(): void
     {
         foreach ($this->ucAPI->getUserList() as $data) {
-            $this->userHandler->syncUser(new User($data->user));
+            $this->userHandler->syncUser(new User($data->user), new SiteList($data->site_list));
         }
     }
 

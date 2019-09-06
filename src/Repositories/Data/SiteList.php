@@ -10,4 +10,9 @@ class SiteList
     {
         $this->data = is_null($data) ? [] : $data;
     }
+
+    public function isNotEmpty(): bool
+    {
+        return count($this->data) > 0;
+    }
 }
