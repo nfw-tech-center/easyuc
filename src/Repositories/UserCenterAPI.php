@@ -2,11 +2,11 @@
 
 namespace SouthCN\EasyUC\Repositories;
 
-use Abel\PrivateApi\PrivateApi;
 use AbelHalo\ApiProxy\ApiProxy;
 use Illuminate\Support\Facades\Config;
 use SouthCN\EasyUC\Exceptions\ApiFailedException;
 use SouthCN\EasyUC\Service;
+use SouthCN\PrivateApi\PrivateApi;
 
 class UserCenterAPI
 {
