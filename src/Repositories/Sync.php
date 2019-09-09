@@ -19,7 +19,12 @@ class Sync
     public function users(): void
     {
         foreach ($this->ucAPI->getUserList() as $data) {
-            $this->userHandler->syncUser(new User($data->user), new SiteList($data->site_list));
+            $user = $this->userHandler->syncUser(new User($data->user));
+
+            // 同时用户信息的同时，必须同步用户的站点列表
+            if (!empty($data->site_list)) {
+                $this->userHandler->syncUserSites($user, new SiteList($data->site_list));
+            }
         }
     }
 
