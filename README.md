@@ -103,58 +103,7 @@ public function register()
 
 因某些用户组的用户在统一登入的 OAuth 回调中，不再携带有站点列表，平台 APP 必须自行实现一个定时任务——每小时拉取一次站点列表。平台 APP 在发生首次登入之前，必须先完整拉取一次站点列表。
 
-假设有这样一个位于 `app/Console/Commands/UserCenterSyncSites.php` 的 Artisan 命令：
-
-```php
-<?php
-
-namespace App\Console\Commands;
-
-use Illuminate\Console\Command;
-use SouthCN\EasyUC\Repositories\UserCenterAPI;
-
-class UserCenterSyncSites extends Command
-{
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'uc:sync-sites';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = '同步站点列表';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-        foreach ((new UserCenterAPI)->getSiteList() as $cmsSite) {
-          // 储存站点信息到本地的逻辑……
-          dump($cmsSite);
-        }
-    }
-}
-```
-
-然后配置定时任务：
+配置定时任务：
 
 ```php
 <?php
@@ -175,6 +124,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('uc:sync-sites')->hourly();
+        $schedule->command('uc:sync-users')->hourly();
     }
 }
 
@@ -260,7 +210,9 @@ public function logout(Request $request, \SouthCN\EasyUC\UserCenterApi $ucApi)
 
 ### 同步用户
 
-要实现用户同步功能， `UserCenterUserHandler` 类必须实现 `public function syncUser(SouthCN\EasyUC\Repositories\Data\User $repository)` 方法
+要实现用户同步功能， `UserCenterUserHandler` 类必须实现 `SouthCN\EasyUC\Contracts\ShouldSyncUser` 接口
+
+要实现用户站点权限同步功能， `UserCenterUserHandler` 类必须实现 `SouthCN\EasyUC\Contracts\ShouldSyncUserSites` 接口
 
 **主动同步（命令行触发）**
 
@@ -281,7 +233,7 @@ php artisan uc:sync-users
 
 ### 同步站点
 
-要实现站点同步功能， `UserCenterUserHandler` 类必须实现 `public function syncSites(array $siteList)` 方法
+要实现站点同步功能， `UserCenterUserHandler` 类必须实现 `SouthCN\EasyUC\Contracts\ShouldSyncSites` 接口
 
 **主动同步（命令行触发）**
 
