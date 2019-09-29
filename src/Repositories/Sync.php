@@ -4,6 +4,7 @@ namespace SouthCN\EasyUC\Repositories;
 
 use Illuminate\Foundation\Auth\User;
 use SouthCN\EasyUC\Contracts\ShouldSyncOrgs;
+use SouthCN\EasyUC\Contracts\ShouldSyncServiceAreas;
 use SouthCN\EasyUC\Contracts\ShouldSyncSites;
 use SouthCN\EasyUC\Contracts\ShouldSyncUser;
 use SouthCN\EasyUC\Contracts\ShouldSyncUserSites;
@@ -47,6 +48,12 @@ class Sync
 
     public function sites(): void
     {
+        if ($this->userHandler instanceof ShouldSyncServiceAreas) {
+            $this->userHandler->syncServiceAreas(
+                new ServiceAreaList($this->ucAPI->getServiceAreaList())
+            );
+        }
+
         if ($this->userHandler instanceof ShouldSyncOrgs) {
             $this->userHandler->syncOrgs(
                 $this->ucAPI->getOrgList()

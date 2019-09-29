@@ -21,6 +21,7 @@ class UserCenterAPI
             'app' => env('UC_APP'),
             'ticket' => env('UC_TICKET'),
 
+            'sync-service-area-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/servicearea/list'],
             'sync-org-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/org/list'],
             'sync-site-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/site/list'],
             'sync-user-list' => ['url' => config('easyuc.oauth.base_url') . '/api/private/sync/user/list'],
@@ -49,6 +50,22 @@ class UserCenterAPI
         }
 
         return $response->data;
+    }
+
+    /**
+     * 用户中心「获取服务区列表」接口
+     *
+     * @throws ApiFailedException
+     */
+    public function getServiceAreaList(): array
+    {
+        $response = PrivateApi::app('easyuc')->api('sync-service-area-list');
+
+        if (empty($response->data)) {
+            throw new ApiFailedException("调用 sync-service-area-list 接口失败：{$response->errmessage}");
+        }
+
+        return $response->data->list;
     }
 
     /**
