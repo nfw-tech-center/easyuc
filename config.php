@@ -36,4 +36,9 @@ return [
         'redirect_url' => env('UC_OAUTH_REDIRECT', '/'),
     ],
 
+    'options' => [
+        // 启用 MySQL 事务功能以提高频繁读写性能
+        'use_transaction' => false,
+    ],
+
 ];
