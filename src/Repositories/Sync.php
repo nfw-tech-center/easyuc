@@ -3,7 +3,6 @@
 namespace SouthCN\EasyUC\Repositories;
 
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\DB;
 use SouthCN\EasyUC\Contracts\ShouldSyncOrgs;
 use SouthCN\EasyUC\Contracts\ShouldSyncServiceAreas;
 use SouthCN\EasyUC\Contracts\ShouldSyncSites;
@@ -24,13 +23,15 @@ class Sync
         $this->userHandler = app('easyuc.user.handler');
     }
 
+    /**
+     * 主动或被动的「同步用户」操作
+     */
     public function users(): void
     {
         if (!($this->userHandler instanceof ShouldSyncUser)) {
             return;
         }
 
-        config('easyuc.options.use_transaction') and DB::beginTransaction();
         foreach ($this->ucAPI->getUserList() as $data) {
             $userData   = new UserData($data->user);
             $existing[] = $data->user->id;
@@ -43,12 +44,14 @@ class Sync
                 $this->helpSyncUserSites($user, $data);
             }
         }
-        config('easyuc.options.use_transaction') and DB::commit();
 
         // 反向删除「存在」以外的用户
         $this->userHandler->removeUsers($existing ?? []);
     }
 
+    /**
+     * 主动或被动的「同步站点」操作
+     */
     public function sites(): void
     {
         if ($this->userHandler instanceof ShouldSyncServiceAreas) {
