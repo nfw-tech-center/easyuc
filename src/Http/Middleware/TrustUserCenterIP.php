@@ -1,6 +1,6 @@
 <?php
 
-namespace SouthCN\EasyUC\Middleware;
+namespace SouthCN\EasyUC\Http\Middleware;
 
 use Closure;
 

@@ -2,8 +2,8 @@
 
 namespace SouthCN\EasyUC;
 
-use SouthCN\EasyUC\Commands\UserCenterSyncSites;
-use SouthCN\EasyUC\Commands\UserCenterSyncUsers;
+use SouthCN\EasyUC\Console\SyncSitesCommand;
+use SouthCN\EasyUC\Console\SyncUsersCommand;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 
 class EasyUCServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -17,7 +17,7 @@ class EasyUCServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/../routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
 
         $this->publishes([
             __DIR__ . '/../config.php' => config_path('easyuc.php'),
@@ -27,8 +27,8 @@ class EasyUCServiceProvider extends \Illuminate\Support\ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                UserCenterSyncUsers::class,
-                UserCenterSyncSites::class,
+                SyncUsersCommand::class,
+                SyncSitesCommand::class,
             ]);
         }
     }

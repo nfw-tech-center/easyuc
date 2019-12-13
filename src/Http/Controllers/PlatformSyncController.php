@@ -1,6 +1,6 @@
 <?php
 
-namespace SouthCN\EasyUC\Controllers;
+namespace SouthCN\EasyUC\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use SouthCN\EasyUC\PlatformResponse;

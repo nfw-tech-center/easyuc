@@ -182,7 +182,7 @@ class PlatformOAuthController extends \SouthCN\EasyUC\Controllers\PlatformOAuthC
 
 ### 中间件
 
-<u>平台 APP</u> 需要在适当位置添加 `\SouthCN\EasyUC\Middleware\PlatformLogout::class` 中间件，以监听平台统一登出信号。
+<u>平台 APP</u> 需要在适当位置添加 `\SouthCN\EasyUC\Http\Middleware\PlatformLogout::class` 中间件，以监听平台统一登出信号。
 
 
 
