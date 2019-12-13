@@ -2,6 +2,8 @@
 
 namespace SouthCN\EasyUC\Repositories\Data;
 
+use stdClass;
+
 abstract class CollectableData
 {
     public $data;
@@ -11,7 +13,12 @@ abstract class CollectableData
         $this->data = is_null($data) ? [] : $data;
     }
 
-    public function has($id): bool
+    public function find(int $id): ?stdClass
+    {
+        return collect($this->data)->where('id', $id)->first();
+    }
+
+    public function has(int $id): bool
     {
         return false !== array_search($id, $this->ids());
     }
