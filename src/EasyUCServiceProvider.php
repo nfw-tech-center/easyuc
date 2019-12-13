@@ -6,7 +6,7 @@ use SouthCN\EasyUC\Commands\UserCenterSyncSites;
 use SouthCN\EasyUC\Commands\UserCenterSyncUsers;
 use SouthCN\EasyUC\Exceptions\ConfigUndefinedException;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class EasyUCServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {

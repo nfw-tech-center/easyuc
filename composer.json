@@ -1,20 +1,9 @@
 {
     "name": "southcn/easyuc",
-    "description": "A SouthCN package",
-    "keywords": [
-        "laravel"
-    ],
-    "homepage": "https://gitlab.com/southcn/easyuc",
-    "authors": [
-        {
-            "name": "Abel",
-            "email": "zxz054321@foxmail.com",
-            "homepage": "https://gitlab.com/southcn"
-        }
-    ],
     "require": {
         "php": ">=7.1.0",
         "abelhalo/api-proxy": "^1.4",
+        "nanfang-media-group/ticker-timer": "dev-master",
         "southcn/private-api": "^1.6"
     },
     "require-dev": {
@@ -28,7 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SouthCN\\EasyUC\\ServiceProvider"
+                "SouthCN\\EasyUC\\EasyUCServiceProvider"
             ]
         }
     },
