@@ -9,7 +9,7 @@ use SouthCN\EasyUC\Repositories\TokenManager;
 
 class Service
 {
-    public static function logoutSignal(?string $logoutToken = null)
+    public static function logoutSignal(?string $logoutToken = null): LogoutSignal
     {
         if (is_null($logoutToken)) {
             $logoutToken = static::token()->logout;
@@ -18,12 +18,12 @@ class Service
         return new LogoutSignal($logoutToken);
     }
 
-    public static function token()
+    public static function token(): TokenManager
     {
         return new TokenManager(Auth::user()->uuid);
     }
 
-    public static function sync()
+    public static function sync(): Sync
     {
         return new Sync;
     }
